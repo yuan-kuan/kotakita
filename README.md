@@ -1,2 +1,0 @@
-# kotakita
-Begin app
