@@ -2,15 +2,15 @@ module.exports = {
   env: {
     node: true,
     es6: true,
-    browser: true
+    browser: true,
   },
   extends: 'eslint:recommended',
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   rules: {
-    semi: ['error', 'never'],
+    semi: ['error', 'always'],
     // enable additional rules
     'linebreak-style': ['error', 'unix'],
     // node specific
@@ -25,13 +25,13 @@ module.exports = {
     'no-redeclare': 'off',
     // style specific
     'no-trailing-spaces': 'error',
-    'no-unused-vars': ['error', { 'args': 'none' }]
+    'no-unused-vars': ['error', { args: 'none' }],
   },
   plugins: ['svelte3'],
   overrides: [
     {
       files: ['**/*.svelte'],
-      processor: 'svelte3/svelte3'
-    }
-  ]
-}
+      processor: 'svelte3/svelte3',
+    },
+  ],
+};

@@ -16,6 +16,12 @@
           "method": "get",
           "src": "/api"
         }
+      },
+      {
+        "/place/:id": {
+          "method": "get",
+          "src": "/place"
+        }
       }
     ],
     "tables": [
@@ -42,6 +48,7 @@
   },
   "dependencies": {
     "@architect/sandbox": "^3.3.7",
-    "@begin/data": "^1.2.3"
+    "@begin/data": "^1.2.3",
+    "svelte-navigator": "^3.1.5"
   }
 }

@@ -1,5 +1,5 @@
 exports.handler = async function http(req) {
-  console.log('Begin API called');
+  console.log('place ', req);
   return {
     headers: {
       'content-type': 'application/json; charset=utf8',
@@ -8,7 +8,8 @@ exports.handler = async function http(req) {
     },
     statusCode: 200,
     body: JSON.stringify({
-      msg: 'Hello from Svelte + your Begin API!',
+      name: 'Pillar of Sabah',
+      description: 'Ruin with Arts',
     }),
   };
 };

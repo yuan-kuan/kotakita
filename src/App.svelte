@@ -1,20 +1,38 @@
 <script>
   import { onMount } from 'svelte'
-  export let name
-  export let message
-  onMount(async () => {
-    let data = await (await fetch('/api')).json()
-    message = data.msg
-    console.log('MESSAGE: ', message)
-  })
+  import { Router, Link, Route } from "svelte-navigator";
+  import Home from "./routes/Home.svelte";
+  import About from "./routes/About.svelte";
+  import Blog from "./routes/Blog.svelte";
+  import Search from "./routes/Search.svelte";
 </script>
 
 <main>
-  <h1>Hello {name}!</h1>
-  <h2>{message}</h2>
   <h3>KokaKika!</h3>
-  <p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
 </main>
+
+<Router>
+  <nav>
+    <Link to="/">Home</Link>
+    <Link to="about">About</Link>
+    <Link to="blog">Blog</Link>
+  </nav>
+  <div>
+    <Route path="/">
+      <Home />
+    </Route>
+    <Route path="about" component={About} />
+    <Route path="blog/*">
+      <Route path="/">
+        <Blog />
+      </Route>
+      <Route path=":id" component={Blog} />
+    </Route>
+    <Route path="search/:query" let:params>
+      <Search query={params.query} />
+    </Route>
+  </div>
+</Router>
 
 <style>
   main {
