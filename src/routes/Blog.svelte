@@ -1,19 +1,19 @@
 <script>
   let name;
   let description;
-  import { onMount } from 'svelte'
+  import { onMount } from 'svelte';
 
   onMount(async () => {
     try {
-      let data = await (await fetch('/place/kk')).json()
-      
+      let data = await (await fetch('/place/kk')).json();
+  
       name =  data.name;
       description = data.description;
-      
+  
     } catch (error) {
       console.error(error);
     }
-  })
+  });
 </script>
 
 <h1>{name}</h1>
