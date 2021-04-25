@@ -3,7 +3,7 @@
   import { Router, Link, Route } from "svelte-navigator";
   import Home from "./routes/Home.svelte";
   import About from "./routes/About.svelte";
-  import Blog from "./routes/Blog.svelte";
+  import Walk from "./routes/Walk.svelte";
   import Search from "./routes/Search.svelte";
 </script>
 
@@ -15,18 +15,20 @@
   <nav>
     <Link to="/">Home</Link>
     <Link to="about">About</Link>
-    <Link to="blog">Blog</Link>
+    <Link to="walk/pasar-besar">Walk</Link>
   </nav>
   <div>
     <Route path="/">
       <Home />
     </Route>
     <Route path="about" component={About} />
-    <Route path="blog/*">
+    <Route path="walk/*">
       <Route path="/">
-        <Blog />
+        <Walk />
       </Route>
-      <Route path=":id" component={Blog} />
+      <Route path=":id" let:params>
+        <Walk placeId={params.id} />
+      </Route>
     </Route>
     <Route path="search/:query" let:params>
       <Search query={params.query} />
