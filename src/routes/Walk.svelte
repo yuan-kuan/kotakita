@@ -1,7 +1,7 @@
 <script>
   import { afterUpdate } from 'svelte';
   import QRious from 'qrious';
-  
+
   export let placeId;
 
   let name;
@@ -15,12 +15,11 @@
         console.log('respond :>> ', respond);
         let data = await respond.json();
         console.log('data :>> ', data);
-        name =  data.name;
+        name = data.name;
         description = data.description;
       } else {
         name = 'Error';
       }
-  
     } catch (error) {
       console.error(error);
     }
@@ -29,7 +28,7 @@
   let qrCanvas;
   const createQR = () => {
     const data = window.location.toString();
-    new QRious({element: qrCanvas, value: data});
+    new QRious({ element: qrCanvas, value: data });
   };
 </script>
 
@@ -39,4 +38,4 @@
 
 <button on:click={createQR}>QR Code</button>
 
-<canvas bind:this = {qrCanvas}></canvas>
+<canvas bind:this={qrCanvas} />

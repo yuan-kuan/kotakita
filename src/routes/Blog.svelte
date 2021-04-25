@@ -6,10 +6,9 @@
   onMount(async () => {
     try {
       let data = await (await fetch('/place/kk')).json();
-  
-      name =  data.name;
+
+      name = data.name;
       description = data.description;
-  
     } catch (error) {
       console.error(error);
     }

@@ -1,9 +1,9 @@
 <script>
-  import { Router, Link, Route } from "svelte-navigator";
-  import Home from "./routes/Home.svelte";
-  import About from "./routes/About.svelte";
-  import Walk from "./routes/Walk.svelte";
-  import Search from "./routes/Search.svelte";
+  import { Router, Link, Route } from 'svelte-navigator';
+  import Home from './routes/Home.svelte';
+  import About from './routes/About.svelte';
+  import Walk from './routes/Walk.svelte';
+  import Search from './routes/Search.svelte';
 </script>
 
 <main>
