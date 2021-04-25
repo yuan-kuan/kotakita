@@ -49,6 +49,7 @@
   "dependencies": {
     "@architect/sandbox": "^3.3.7",
     "@begin/data": "^1.2.3",
+    "qrious": "^4.0.2",
     "svelte-navigator": "^3.1.5"
   }
 }
