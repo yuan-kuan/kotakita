@@ -1,5 +1,5 @@
 <script>
-  import { Link, useNavigate } from 'svelte-navigator';
+  import { useNavigate } from 'svelte-navigator';
   import QRious from 'qrious';
 
   const navigate = useNavigate();
@@ -48,11 +48,14 @@
   };
 </script>
 
-<h1>{name}</h1>
+<div class="title has-text-centered pt-2">
+  {name}
+  <button class="button" on:click={createQR}>QR</button>
+</div>
 
-<p>{description}</p>
-
-<button class="button is-primary" on:click={createQR}>QR Code</button>
+<div class="px-2 pb-2">
+  <p class="box desc">{description}</p>
+</div>
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <iframe
@@ -65,12 +68,15 @@
 />
 
 {#if nexts}
-  <button class="button is-link" on:click={navigate('../' + nexts[0][0])}>
-    {nexts[0][1]}
-  </button>
-  <button class="button is-link" on:click={navigate('../' + nexts[1][0])}>
-    {nexts[1][1]}
-  </button>
+  <div class="mx-2 box">
+    <p>Next</p>
+    <button class="button is-link" on:click={navigate('../' + nexts[0][0])}>
+      {nexts[0][1]}
+    </button>
+    <button class="button is-link" on:click={navigate('../' + nexts[1][0])}>
+      {nexts[1][1]}
+    </button>
+  </div>
 {/if}
 
 <div class="modal" class:is-active={showingQr}>
@@ -84,5 +90,9 @@
 <style>
   .modal-content {
     width: auto;
+  }
+
+  .desc {
+    background-color: lightgrey;
   }
 </style>
