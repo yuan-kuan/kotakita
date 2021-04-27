@@ -1,6 +1,8 @@
 <script>
-  import { Link } from 'svelte-navigator';
+  import { Link, useNavigate } from 'svelte-navigator';
   import QRious from 'qrious';
+
+  const navigate = useNavigate();
 
   export let placeId;
 
@@ -33,10 +35,16 @@
     fetchData(placeId);
   }
 
+  let showingQr = false;
   let qrCanvas;
   const createQR = () => {
     const data = window.location.toString();
-    new QRious({ element: qrCanvas, value: data });
+    new QRious({ element: qrCanvas, value: data, size: 300 });
+
+    showingQr = true;
+  };
+  const closeQR = () => {
+    showingQr = false;
   };
 </script>
 
@@ -44,9 +52,7 @@
 
 <p>{description}</p>
 
-<button on:click={createQR}>QR Code</button>
-
-<canvas bind:this={qrCanvas} />
+<button class="button is-primary" on:click={createQR}>QR Code</button>
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <iframe
@@ -59,8 +65,24 @@
 />
 
 {#if nexts}
-  <nav>
-    <Link to="../../walk/{nexts[0][0]}">{nexts[0][1]}</Link>
-    <Link to="../../walk/{nexts[1][0]}">{nexts[1][1]}</Link>
-  </nav>
+  <button class="button is-link" on:click={navigate('../' + nexts[0][0])}>
+    {nexts[0][1]}
+  </button>
+  <button class="button is-link" on:click={navigate('../' + nexts[1][0])}>
+    {nexts[1][1]}
+  </button>
 {/if}
+
+<div class="modal" class:is-active={showingQr}>
+  <div class="modal-background" on:click={closeQR} />
+  <div class="modal-content">
+    <canvas bind:this={qrCanvas} />
+  </div>
+  <button class="modal-close is-large" aria-label="close" on:click={closeQR} />
+</div>
+
+<style>
+  .modal-content {
+    width: auto;
+  }
+</style>

@@ -1,4 +1,6 @@
 <script>
+  import 'bulma/css/bulma.css'
+  
   import { Router, Link, Route } from 'svelte-navigator';
   import Home from './routes/Home.svelte';
   import About from './routes/About.svelte';
