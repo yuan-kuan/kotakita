@@ -3,6 +3,7 @@
 
   import { Router, Route } from 'svelte-navigator';
   import Home from './routes/Home.svelte';
+  import Map from './routes/Map.svelte';
   import Walk from './routes/Walk.svelte';
 </script>
 
@@ -20,7 +21,7 @@
     </Route>
     <Route path="walk/*">
       <Route path="/">
-        <Walk />
+        <Map />
       </Route>
       <Route path=":id" let:params>
         <Walk placeId={params.id} />
