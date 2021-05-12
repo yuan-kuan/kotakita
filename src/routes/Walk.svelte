@@ -8,6 +8,7 @@
 
   let name;
   let description;
+  let photoUrl;
   let mapUrl;
   let nexts;
 
@@ -21,6 +22,7 @@
         console.log('data :>> ', data);
         name = data.selected.name;
         description = data.selected.description;
+        photoUrl = data.selected.photoUrl;
         mapUrl = data.selected.mapUrl;
         nexts = data.nexts;
       } else {
@@ -52,6 +54,8 @@
   {name}
   <button class="button" on:click={createQR}>QR</button>
 </div>
+
+<img src={photoUrl} alt="The photo of {name}" />
 
 <div class="px-2 pb-2">
   <p class="box desc">{description}</p>
