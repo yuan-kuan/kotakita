@@ -20,7 +20,13 @@
       {
         "/place/:id": {
           "method": "get",
-          "src": "/place"
+          "src": "/api/get-place"
+        }
+      },
+      {
+        "/place/": {
+          "method": "post",
+          "src": "/api/post-place"
         }
       }
     ],
