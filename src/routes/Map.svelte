@@ -21,6 +21,20 @@
       console.error(error);
     }
   };
+
+  const getAllPlaces = async () => {
+    try {
+      let respond = await fetch('/all-places');
+
+      if (respond.ok) {
+        console.log('respond :>> ', respond);
+      } else {
+        console.error(respond);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 </script>
 
 <ul>
@@ -31,3 +45,4 @@
   {/each}
 </ul>
 <button on:click={sendData}>Add</button>
+<button on:click={getAllPlaces}>Refresh</button>

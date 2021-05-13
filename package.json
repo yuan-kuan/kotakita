@@ -8,38 +8,6 @@
     "lint": "eslint src --fix",
     "start": "npx sandbox"
   },
-  "arc": {
-    "app": "svelte-app",
-    "http": [
-      {
-        "/api": {
-          "method": "get",
-          "src": "/api"
-        }
-      },
-      {
-        "/place/:id": {
-          "method": "get",
-          "src": "/api/get-place"
-        }
-      },
-      {
-        "/place/": {
-          "method": "post",
-          "src": "/api/post-place"
-        }
-      }
-    ],
-    "tables": [
-      {
-        "data": {
-          "scopeID": "*String",
-          "dataID": "**String",
-          "ttl": "TTL"
-        }
-      }
-    ]
-  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
