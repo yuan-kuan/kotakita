@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { Link } from 'svelte-navigator';
 
   let newPlace;
   const addNewPlace = async (id) => {
@@ -62,7 +63,7 @@
 <ul>
   {#each places as place}
     <li>
-      {place.name}
+      <Link to={place.key}>{place.name}</Link>
     </li>
   {/each}
 </ul>
