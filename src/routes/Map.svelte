@@ -4,7 +4,6 @@
 
   let newPlace;
   const addNewPlace = async (id) => {
-    console.log('did I send?');
     try {
       let respond = await fetch('/place', {
         method: 'POST',
@@ -12,6 +11,25 @@
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ newPlace }),
+      });
+
+      if (respond.ok) {
+        console.log('respond :>> ', respond);
+      } else {
+        console.error(respond);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deletePlace = async (id) => {
+    try {
+      let respond = await fetch('/place/' + id, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
 
       if (respond.ok) {
@@ -64,6 +82,7 @@
   {#each places as place}
     <li>
       <Link to={place.key}>{place.name}</Link>
+      <button on:click={deletePlace(place.key)}>X</button>
     </li>
   {/each}
 </ul>
