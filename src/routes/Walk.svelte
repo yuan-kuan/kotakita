@@ -37,6 +37,38 @@
     fetchData(placeId);
   }
 
+  let showingDescEdit = false;
+  let workingDesc = '';
+  const startDescEdit = () => {
+    workingDesc = description;
+    showingDescEdit = true;
+  };
+  const closeDescEdit = () => {
+    showingDescEdit = false;
+  };
+  const editDescription = async () => {
+    try {
+      console.log('editing update ', workingDesc);
+      let respond = await fetch('/place/' + placeId, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ description: workingDesc }),
+      });
+
+      if (respond.ok) {
+        console.log('respond :>> ', respond);
+        showingDescEdit = false;
+        fetchData(placeId);
+      } else {
+        console.error(respond);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   let showingQr = false;
   let qrCanvas;
   const createQR = () => {
@@ -59,6 +91,20 @@
 
 <div class="px-2 pb-2">
   <p class="box desc">{description}</p>
+  <button on:click={startDescEdit}>Edit</button>
+</div>
+
+<div class="modal" class:is-active={showingDescEdit}>
+  <div class="modal-background" on:click={closeDescEdit} />
+  <div class="modal-content">
+    <textarea cols="30" rows="20" bind:value={workingDesc} />
+    <button on:click={editDescription}>Submit</button>
+  </div>
+  <button
+    class="modal-close is-large"
+    aria-label="close"
+    on:click={closeDescEdit}
+  />
 </div>
 
 <!-- svelte-ignore a11y-missing-attribute -->
