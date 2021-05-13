@@ -1,7 +1,6 @@
 <script>
-  let places = [{ name: 'a' }, { name: 'b' }];
-
-  const sendData = async (id) => {
+  let newPlace;
+  const addNewPlace = async (id) => {
     console.log('did I send?');
     try {
       let respond = await fetch('/place', {
@@ -9,7 +8,7 @@
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ just: 'kidding' }),
+        body: JSON.stringify({ newPlace }),
       });
 
       if (respond.ok) {
@@ -22,12 +21,16 @@
     }
   };
 
+  let places = [{ name: 'a' }, { name: 'b' }];
+
   const getAllPlaces = async () => {
     try {
       let respond = await fetch('/all-places');
 
       if (respond.ok) {
         console.log('respond :>> ', respond);
+        places = await respond.json();
+        console.log('data :>> ', places);
       } else {
         console.error(respond);
       }
@@ -44,5 +47,6 @@
     </li>
   {/each}
 </ul>
-<button on:click={sendData}>Add</button>
+<input type="text" bind:value={newPlace} />
+<button on:click={addNewPlace}>Add</button>
 <button on:click={getAllPlaces}>Refresh</button>

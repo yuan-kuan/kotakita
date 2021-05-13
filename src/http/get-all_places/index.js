@@ -1,12 +1,17 @@
 let data = require('@begin/data');
 
 exports.handler = async function http(req) {
-  let table = 'place';
-  let placeId = 'gaya';
-  let d = 'gaya stree';
+  const table = 'place';
 
-  await data.set({ table, placeId, d });
-  let name = await data.get({ table, placeId });
+  const allPlaces = await data.get({ table });
 
-  console.log('name :>> ', name);
+  return {
+    headers: {
+      'content-type': 'application/json; charset=utf8',
+      'cache-control':
+        'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0',
+    },
+    statusCode: 200,
+    body: JSON.stringify(allPlaces),
+  };
 };
