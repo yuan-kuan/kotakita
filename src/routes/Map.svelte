@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from 'svelte';
+
   let newPlace;
   const addNewPlace = async (id) => {
     console.log('did I send?');
@@ -21,8 +23,7 @@
     }
   };
 
-  let places = [{ name: 'a' }, { name: 'b' }];
-
+  let places = [];
   const getAllPlaces = async () => {
     try {
       let respond = await fetch('/all-places');
@@ -31,6 +32,24 @@
         console.log('respond :>> ', respond);
         places = await respond.json();
         console.log('data :>> ', places);
+      } else {
+        console.error(respond);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  onMount(() => getAllPlaces());
+
+  const prefill = async () => {
+    try {
+      let respond = await fetch('/prefill', {
+        method: 'POST',
+      });
+
+      if (respond.ok) {
+        console.log('respond :>> ', respond);
       } else {
         console.error(respond);
       }
@@ -50,3 +69,4 @@
 <input type="text" bind:value={newPlace} />
 <button on:click={addNewPlace}>Add</button>
 <button on:click={getAllPlaces}>Refresh</button>
+<button on:click={prefill}>Pre Fill</button>

@@ -5,6 +5,7 @@ svelte-app
 get /place/:id
 get /all-places
 post /place
+post /prefill
 
 @tables
 data
