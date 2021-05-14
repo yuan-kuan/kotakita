@@ -1,8 +1,5 @@
 <script>
-  import { useNavigate } from 'svelte-navigator';
   import QRious from 'qrious';
-
-  const navigate = useNavigate();
 
   export let placeId;
 
@@ -178,18 +175,6 @@
   loading="lazy"
 />
 <button on:click={() => startEdit('mapUrl')}>Edit Map</button>
-
-<!-- {#if nexts}
-  <div class="mx-2 box">
-    <p>Next</p>
-    <button class="button is-link" on:click={navigate('../' + nexts[0][0])}>
-      {nexts[0][1]}
-    </button>
-    <button class="button is-link" on:click={navigate('../' + nexts[1][0])}>
-      {nexts[1][1]}
-    </button>
-  </div>
-{/if} -->
 
 <div class="modal" class:is-active={showingQr}>
   <div class="modal-background" on:click={closeQR} />
