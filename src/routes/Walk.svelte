@@ -47,6 +47,16 @@
   const editDescription = async () => {
     try {
       const n = {};
+
+      if (editing == 'mapUrl') {
+        const validUrl = working.match(/src="([^"]*)"/);
+        if (validUrl) working = validUrl[1];
+        else if (!working.match(/^https:\/\/www.google.com\/maps\/embed/)) {
+          console.error('Bad Google Map URL or embed URL. ', working);
+          return;
+        }
+      }
+
       n[editing] = working;
       console.log('editing update ', JSON.stringify(n));
       let respond = await fetch('/place/' + placeId, {
@@ -99,7 +109,7 @@
   <div class="modal-background" on:click={closeEdit} />
   <div class="modal-card">
     <header class="modal-card-head">
-      <p class="modal-card-title">Edit Description</p>
+      <p class="modal-card-title">Edit {editing}</p>
     </header>
     <section class="modal-card-body">
       <textarea class="textarea" bind:value={working} />
@@ -125,6 +135,7 @@
   allowfullscreen=""
   loading="lazy"
 />
+<button on:click={() => startEdit('mapUrl')}>Edit Map</button>
 
 <!-- {#if nexts}
   <div class="mx-2 box">
