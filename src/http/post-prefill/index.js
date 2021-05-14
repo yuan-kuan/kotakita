@@ -26,7 +26,7 @@ const places = [
 
 const toParamCase = (str) => {
   str = str.toLowerCase();
-  str = str.replaceAll(' ', '-');
+  str = str.replace(/[ ]/g, '-');
   return str;
 };
 
