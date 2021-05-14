@@ -6,11 +6,12 @@
 
   export let placeId;
 
-  let name;
-  let description;
-  let photoUrl;
-  let mapUrl;
-  let nexts;
+  let place;
+  $: name = place?.name;
+  $: description = place?.description;
+  $: photoUrl = place?.photoUrl;
+  $: mapUrl = place?.mapUrl;
+  // $: nexts = place.nexts;
 
   const fetchData = async (id) => {
     try {
@@ -20,11 +21,7 @@
         console.log('respond :>> ', respond);
         let data = await respond.json();
         console.log('data :>> ', data);
-        name = data.selected.name;
-        description = data.selected.description;
-        photoUrl = data.selected.photoUrl;
-        mapUrl = data.selected.mapUrl;
-        nexts = data.nexts;
+        place = data.selected;
       } else {
         name = 'Error';
       }
@@ -37,29 +34,31 @@
     fetchData(placeId);
   }
 
-  let showingDescEdit = false;
-  let workingDesc = '';
-  const startDescEdit = () => {
-    workingDesc = description;
-    showingDescEdit = true;
+  let editing;
+  $: showingEdit = editing;
+  let working = '';
+  const startEdit = (attributeName) => {
+    working = place[attributeName];
+    editing = attributeName;
   };
-  const closeDescEdit = () => {
-    showingDescEdit = false;
+  const closeEdit = () => {
+    editing = null;
   };
   const editDescription = async () => {
     try {
-      console.log('editing update ', workingDesc);
+      const n = {};
+      n[editing] = working;
+      console.log('editing update ', JSON.stringify(n));
       let respond = await fetch('/place/' + placeId, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ description: workingDesc }),
+        body: JSON.stringify(n),
       });
 
       if (respond.ok) {
-        console.log('respond :>> ', respond);
-        showingDescEdit = false;
+        closeEdit();
         fetchData(placeId);
       } else {
         console.error(respond);
@@ -84,26 +83,36 @@
 
 <div class="title has-text-centered pt-2">
   {name}
+  <button on:click={() => startEdit('name')}>Edit</button>
   <button class="button" on:click={createQR}>QR</button>
 </div>
 
 <img src={photoUrl} alt="The photo of {name}" />
+<button on:click={() => startEdit('photoUrl')}>Change Photo</button>
 
 <div class="px-2 pb-2">
   <p class="box desc">{description}</p>
-  <button on:click={startDescEdit}>Edit</button>
+  <button on:click={() => startEdit('description')}>Edit</button>
 </div>
 
-<div class="modal" class:is-active={showingDescEdit}>
-  <div class="modal-background" on:click={closeDescEdit} />
-  <div class="modal-content">
-    <textarea cols="30" rows="20" bind:value={workingDesc} />
-    <button on:click={editDescription}>Submit</button>
+<div class="modal" class:is-active={showingEdit}>
+  <div class="modal-background" on:click={closeEdit} />
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Edit Description</p>
+    </header>
+    <section class="modal-card-body">
+      <textarea class="textarea" bind:value={working} />
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" on:click={editDescription}>Save</button>
+      <button class="button" on:click={closeEdit}>Cancel</button>
+    </footer>
   </div>
   <button
     class="modal-close is-large"
     aria-label="close"
-    on:click={closeDescEdit}
+    on:click={closeEdit}
   />
 </div>
 
@@ -117,7 +126,7 @@
   loading="lazy"
 />
 
-{#if nexts}
+<!-- {#if nexts}
   <div class="mx-2 box">
     <p>Next</p>
     <button class="button is-link" on:click={navigate('../' + nexts[0][0])}>
@@ -127,7 +136,7 @@
       {nexts[1][1]}
     </button>
   </div>
-{/if}
+{/if} -->
 
 <div class="modal" class:is-active={showingQr}>
   <div class="modal-background" on:click={closeQR} />
