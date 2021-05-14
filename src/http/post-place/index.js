@@ -1,14 +1,19 @@
-let changeCase = require('change-case');
 let data = require('@begin/data');
+
+const toParamCase = (str) => {
+  str = str.toLowerCase();
+  str = str.replaceAll(' ', '-');
+  return str;
+};
 
 exports.handler = async function http(req) {
   const payload = JSON.parse(req.body);
-  if (payload?.newPlace) {
+  if (payload.newPlace) {
     const table = 'place';
     const name = payload.newPlace;
     await data.set({
       table,
-      key: changeCase.paramCase(name),
+      key: toParamCase(name),
       name,
       description: `Description needed for ${name}`,
     });

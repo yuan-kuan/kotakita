@@ -1,4 +1,3 @@
-let changeCase = require('change-case');
 let data = require('@begin/data');
 
 const places = [
@@ -25,12 +24,18 @@ const places = [
   },
 ];
 
+const toParamCase = (str) => {
+  str = str.toLowerCase();
+  str = str.replaceAll(' ', '-');
+  return str;
+};
+
 exports.handler = async function http(req) {
   const table = 'place';
   places.forEach(async (element) => {
     await data.set({
       table,
-      key: changeCase.paramCase(element.name),
+      key: toParamCase(element.name),
       name: element.name,
       description: element.description,
       photoUrl: element.photoUrl,
