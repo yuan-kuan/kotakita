@@ -78,6 +78,41 @@
     }
   };
 
+  let cameraInput;
+  const changePhoto = () => cameraInput.click();
+  const photoTaken = async (e) => {
+    const blob = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', blob);
+
+    const expiration = 0;
+    const key = '54e0a6c82adf9b36d8df784a3a88d7c9';
+    let imgbbUploadUrl = `https://api.imgbb.com/1/upload?key=${key}`;
+    if (expiration > 0) {
+      imgbbUploadUrl += `&expiration=${expiration}`;
+    }
+
+    try {
+      const respond = await fetch(imgbbUploadUrl, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (respond.ok) {
+        const imgbbResult = await respond.json();
+        const mediumUrl = imgbbResult.data.medium.url;
+
+        editing = 'photoUrl';
+        working = mediumUrl;
+        editDescription();
+      } else {
+        throw `Failed uploading, respond: ${JSON.stringify(respond)}`;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   let showingQr = false;
   let qrCanvas;
   const createQR = () => {
@@ -98,7 +133,14 @@
 </div>
 
 <img src={photoUrl} alt="The photo of {name}" />
-<button on:click={() => startEdit('photoUrl')}>Change Photo</button>
+<input
+  style="display: none"
+  bind:this={cameraInput}
+  type="file"
+  accept="image/*"
+  on:change={photoTaken}
+/>
+<button on:click={changePhoto}>Change Photo</button>
 
 <div class="px-2 pb-2">
   <p class="box desc">{description}</p>
