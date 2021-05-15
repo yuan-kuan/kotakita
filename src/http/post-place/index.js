@@ -1,5 +1,6 @@
 let begin = require('@architect/functions');
 let data = require('@begin/data');
+let admin = require('@architect/shared/admin');
 
 const toParamCase = (str) => {
   str = str.toLowerCase();
@@ -7,21 +8,9 @@ const toParamCase = (str) => {
   return str;
 };
 
-const reject = () => {
-  return {
-    headers: {
-      'content-type': 'application/json; charset=utf8',
-      'cache-control':
-        'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0',
-    },
-    statusCode: 403,
-  };
-};
-
 const addNewPlace = async (req) => {
-  console.log('req :>> ', req);
-  if (!req.session || !req.session.isAdmin) {
-    return reject();
+  if (!admin.checkSessionAdmin(req)) {
+    return admin.reject();
   }
 
   const payload = req.body;

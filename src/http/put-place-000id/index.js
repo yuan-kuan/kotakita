@@ -1,9 +1,15 @@
 let data = require('@begin/data');
+let begin = require('@architect/functions');
+let admin = require('@architect/shared/admin');
 
-exports.handler = async function http(req) {
+const updatePlace = async (req) => {
+  if (!admin.checkSessionAdmin(req)) {
+    return admin.reject();
+  }
+
   if (req.pathParameters !== false) {
     const key = req.pathParameters.id;
-    const payload = JSON.parse(req.body);
+    const payload = req.body;
 
     const table = 'place';
     const place = await data.get({ table, key });
@@ -29,3 +35,5 @@ exports.handler = async function http(req) {
     statusCode: 200,
   };
 };
+
+exports.handler = begin.http.async(updatePlace);

@@ -1,3 +1,5 @@
+let admin = require('@architect/shared/admin');
+let begin = require('@architect/functions');
 let data = require('@begin/data');
 
 const places = [
@@ -30,7 +32,11 @@ const toParamCase = (str) => {
   return str;
 };
 
-exports.handler = async function http(req) {
+const prefill = async (req) => {
+  if (!admin.checkSessionAdmin(req)) {
+    return admin.reject();
+  }
+
   const table = 'place';
   places.forEach(async (element) => {
     await data.set({
@@ -52,3 +58,5 @@ exports.handler = async function http(req) {
     statusCode: 200,
   };
 };
+
+exports.handler = begin.http.async(prefill);

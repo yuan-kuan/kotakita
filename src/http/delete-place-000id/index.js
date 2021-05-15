@@ -1,6 +1,11 @@
 let data = require('@begin/data');
+let begin = require('@architect/functions');
+let admin = require('@architect/shared/admin');
 
-exports.handler = async function http(req) {
+const deletePlace = async (req) => {
+  if (!admin.checkSessionAdmin(req)) {
+    return admin.reject();
+  }
   if (req.pathParameters !== false) {
     let key = req.pathParameters.id;
 
@@ -16,3 +21,5 @@ exports.handler = async function http(req) {
     statusCode: 200,
   };
 };
+
+exports.handler = begin.http.async(deletePlace);
