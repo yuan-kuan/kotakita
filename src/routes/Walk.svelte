@@ -1,5 +1,6 @@
 <script>
   import QRious from 'qrious';
+  import { isAdmin } from '../user_store';
 
   export let placeId;
 
@@ -125,8 +126,10 @@
 
 <div class="title has-text-centered pt-2">
   {name}
-  <button on:click={() => startEdit('name')}>Edit</button>
-  <button class="button" on:click={createQR}>QR</button>
+  {#if $isAdmin}
+    <button on:click={() => startEdit('name')}>Edit</button>
+    <button class="button" on:click={createQR}>QR</button>
+  {/if}
 </div>
 
 <img src={photoUrl} alt="The photo of {name}" />
@@ -137,11 +140,15 @@
   accept="image/*"
   on:change={photoTaken}
 />
-<button on:click={changePhoto}>Change Photo</button>
+{#if $isAdmin}
+  <button on:click={changePhoto}>Change Photo</button>
+{/if}
 
 <div class="px-2 pb-2">
   <p class="box desc">{description}</p>
-  <button on:click={() => startEdit('description')}>Edit</button>
+  {#if $isAdmin}
+    <button on:click={() => startEdit('description')}>Edit</button>
+  {/if}
 </div>
 
 <div class="modal" class:is-active={showingEdit}>
@@ -174,7 +181,9 @@
   allowfullscreen=""
   loading="lazy"
 />
-<button on:click={() => startEdit('mapUrl')}>Edit Map</button>
+{#if $isAdmin}
+  <button on:click={() => startEdit('mapUrl')}>Edit Map</button>
+{/if}
 
 <div class="modal" class:is-active={showingQr}>
   <div class="modal-background" on:click={closeQR} />

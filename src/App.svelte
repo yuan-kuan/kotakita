@@ -2,17 +2,9 @@
   import 'bulma/css/bulma.css';
 
   import { Router, Route } from 'svelte-navigator';
-  import Home from './routes/Home.svelte';
   import Map from './routes/Map.svelte';
   import Walk from './routes/Walk.svelte';
-
-  const signIn = async () => {
-    const respond = await fetch('/admin-access', {
-      method: 'GET',
-    });
-
-    console.log('respond :>> ', respond);
-  };
+  import { tryAdminAccess } from './user_store';
 </script>
 
 <section class="hero is-warning is-small">
@@ -20,13 +12,13 @@
     <p class="title">Kota Kita</p>
     <p class="subtitle">Work In Progress!!!</p>
   </div>
-  <button on:click={signIn}>Sign in</button>
+  <button on:click={tryAdminAccess}>Admin Access</button>
 </section>
 
 <Router>
   <div>
     <Route path="/">
-      <Home />
+      <Map />
     </Route>
     <Route path="walk/*">
       <Route path="/">

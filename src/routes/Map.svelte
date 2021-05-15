@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { Link } from 'svelte-navigator';
+  import { isAdmin } from '../user_store';
 
   let newPlace;
   const addNewPlace = async (id) => {
@@ -83,11 +84,16 @@
   {#each places as place}
     <li>
       <Link to={place.key}>{place.name}</Link>
-      <button on:click={deletePlace(place.key)}>X</button>
+      {#if $isAdmin}
+        <button on:click={deletePlace(place.key)}>X</button>
+      {/if}
     </li>
   {/each}
 </ul>
 <input type="text" bind:value={newPlace} />
-<button on:click={addNewPlace}>Add</button>
 <button on:click={getAllPlaces}>Refresh</button>
-<button on:click={prefill}>Pre Fill</button>
+<br />
+{#if $isAdmin}
+  <button on:click={addNewPlace}>Add</button>
+  <button on:click={prefill}>Pre Fill</button>
+{/if}
