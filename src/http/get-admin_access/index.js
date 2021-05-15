@@ -14,24 +14,18 @@ const reject = () => {
 
 const requestAdminAccess = async (req) => {
   const auth = req.headers.authorization;
-  console.log('auth :>> ', auth);
-
   if (!auth) {
     return reject();
   }
 
-  const bin = auth.split(' ')[1];
-  console.log('bin :>> ', bin);
-
+  const [_, bin] = auth.split(' ');
   const text = Buffer.from(bin, 'base64').toString();
 
   const [user, password] = text.split(/:/);
-  console.log('user :>> ', user);
-  console.log('password :>> ', password);
+  if (user != process.env.ADMIN_NAME || password != process.env.ADMIN_PASS)
+    return reject();
 
-  if (user != password) return reject();
-
-  const session = req.session ?? {};
+  const session = req.session || {};
   session['isAdmin'] = true;
 
   return {

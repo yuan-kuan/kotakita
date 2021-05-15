@@ -8,7 +8,7 @@
 
   const signIn = async () => {
     const respond = await fetch('/admin-access', {
-      method: 'POST',
+      method: 'GET',
     });
 
     console.log('respond :>> ', respond);
