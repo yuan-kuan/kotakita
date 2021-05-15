@@ -2,6 +2,7 @@
 svelte-app
 
 @http
+get /admin-access
 get /place/:id
 put /place/:id
 delete /place/:id

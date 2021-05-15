@@ -23,6 +23,7 @@
     "svelte": "^3.35.0"
   },
   "dependencies": {
+    "@architect/functions": "^3.13.11",
     "@architect/sandbox": "^3.3.7",
     "@begin/data": "^1.2.3",
     "qrious": "^4.0.2",

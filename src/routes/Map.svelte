@@ -7,6 +7,7 @@
     try {
       let respond = await fetch('/place', {
         method: 'POST',
+        // credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
         },

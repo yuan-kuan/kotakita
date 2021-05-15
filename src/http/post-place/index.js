@@ -1,3 +1,4 @@
+let begin = require('@architect/functions');
 let data = require('@begin/data');
 
 const toParamCase = (str) => {
@@ -6,8 +7,24 @@ const toParamCase = (str) => {
   return str;
 };
 
-exports.handler = async function http(req) {
-  const payload = JSON.parse(req.body);
+const reject = () => {
+  return {
+    headers: {
+      'content-type': 'application/json; charset=utf8',
+      'cache-control':
+        'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0',
+    },
+    statusCode: 403,
+  };
+};
+
+const addNewPlace = async (req) => {
+  console.log('req :>> ', req);
+  if (!req.session || !req.session.isAdmin) {
+    return reject();
+  }
+
+  const payload = req.body;
   if (payload.newPlace) {
     const table = 'place';
     const name = payload.newPlace;
@@ -21,6 +38,7 @@ exports.handler = async function http(req) {
 
   return {
     headers: {
+      'WWW-Authenticate': 'Basic realm="Admin Access", charset="UTF-8"',
       'content-type': 'application/json; charset=utf8',
       'cache-control':
         'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0',
@@ -28,3 +46,5 @@ exports.handler = async function http(req) {
     statusCode: 200,
   };
 };
+
+exports.handler = begin.http.async(addNewPlace);
