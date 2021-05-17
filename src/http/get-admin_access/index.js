@@ -18,6 +18,7 @@ const requestAdminAccess = async (req) => {
     return reject();
   }
 
+  // eslint-disable-next-line no-unused-vars
   const [_, bin] = auth.split(' ');
   const text = Buffer.from(bin, 'base64').toString();
 
