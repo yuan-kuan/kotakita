@@ -4,7 +4,7 @@
   import { Router, Route } from 'svelte-navigator';
   import Map from './routes/Map.svelte';
   import Walk from './routes/Walk.svelte';
-  import { tryAdminAccess, userProfile } from './user_store';
+  import { tryAdminAccess, userProfile, forgetUser } from './user_store';
 
   $: userId = $userProfile.id;
 </script>
@@ -12,7 +12,11 @@
 <section class="hero is-warning is-small">
   <div class="hero-body">
     <p class="title">Kota Kita</p>
-    <p class="subtitle">{userId}</p>
+    <div class="subtitle">
+      <!-- svelte-ignore a11y-label-has-associated-control -->
+      <label>{userId}</label>
+      <button on:click={forgetUser}>Forget Me</button>
+    </div>
   </div>
 
   <button on:click={tryAdminAccess}>Admin Access</button>

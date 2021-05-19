@@ -18,16 +18,26 @@ export const tryAdminAccess = async () => {
   }
 };
 
-export const userProfile = readable({}, (set) => {
-  let saved = window.localStorage.getItem('userProfile');
-  if (!saved) {
-    saved = JSON.stringify({ id: uuidv4() });
-    try {
-      window.localStorage.setItem('userProfile', saved);
-    } catch (error) {
-      console.error(error);
-    }
+let resetProfile;
+const createNewUser = () => {
+  const newUser = { id: uuidv4() };
+  try {
+    window.localStorage.setItem('userProfile', JSON.stringify(newUser));
+  } catch (error) {
+    console.error(error);
   }
+  return newUser;
+};
 
-  set(JSON.parse(saved));
+export const userProfile = readable({}, (set) => {
+  resetProfile = set;
+  let saved = window.localStorage.getItem('userProfile');
+  let user = saved ? JSON.parse(saved) : createNewUser();
+  resetProfile(user);
 });
+
+export const forgetUser = () => {
+  window.localStorage.removeItem('userProfile');
+  let newUser = createNewUser();
+  resetProfile(newUser);
+};
