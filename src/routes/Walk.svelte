@@ -1,36 +1,18 @@
 <script>
   import QRious from 'qrious';
   import { isAdmin } from '../user_store';
+  import { visitingPlace, visitPlace } from '../route_store';
+  import CheckIn from './CheckIn.svelte';
 
   export let placeId;
 
-  let place;
-  $: name = place?.name;
-  $: description = place?.description;
-  $: photoUrl = place?.photoUrl;
-  $: mapUrl = place?.mapUrl;
-  // $: nexts = place.nexts;
-
-  const fetchData = async (id) => {
-    try {
-      let respond = await fetch('/place/' + id);
-
-      if (respond.ok) {
-        console.log('respond :>> ', respond);
-        let data = await respond.json();
-        console.log('data :>> ', data);
-        place = data.selected;
-      } else {
-        name = 'Error';
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   $: {
-    fetchData(placeId);
+    visitPlace(placeId);
   }
+  $: name = $visitingPlace.name;
+  $: description = $visitingPlace.description;
+  $: photoUrl = $visitingPlace.photoUrl;
+  $: mapUrl = $visitingPlace.mapUrl;
 
   let editing;
   $: showingEdit = editing;
@@ -184,6 +166,8 @@
 {#if $isAdmin}
   <button on:click={() => startEdit('mapUrl')}>Edit Map</button>
 {/if}
+
+<CheckIn />
 
 <div class="modal" class:is-active={showingQr}>
   <div class="modal-background" on:click={closeQR} />
