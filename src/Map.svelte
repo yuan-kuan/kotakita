@@ -83,7 +83,7 @@
 <ul>
   {#each places as place}
     <li>
-      <Link to={place.key}>{place.name}</Link>
+      <Link to={`walk/${place.key}`}>{place.name}</Link>
       {#if $isAdmin}
         <button on:click={deletePlace(place.key)}>X</button>
       {/if}

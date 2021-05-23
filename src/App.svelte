@@ -1,10 +1,11 @@
 <script>
   import 'bulma/css/bulma.css';
 
-  import { Router, Route } from 'svelte-navigator';
+  import { Router, Route, Link } from 'svelte-navigator';
   import Map from './Map.svelte';
   import Walk from './Walk.svelte';
   import { tryAdminAccess, userProfile, forgetUser } from './user_store';
+  import History from './History.svelte';
 
   $: userId = $userProfile.id;
 </script>
@@ -23,6 +24,8 @@
 </section>
 
 <Router>
+  <Link to="/">Map</Link>
+  <Link to="/history">history</Link>
   <div>
     <Route path="/">
       <Map />
@@ -34,6 +37,9 @@
       <Route path=":id" let:params>
         <Walk placeId={params.id} />
       </Route>
+    </Route>
+    <Route path="/history">
+      <History />
     </Route>
   </div>
 </Router>

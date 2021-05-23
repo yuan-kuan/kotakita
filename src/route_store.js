@@ -32,3 +32,8 @@ export const checkIn = () => {
   routes.push(visitingPlaceId);
   determineCheckedInStatus();
 };
+
+export const getTodayRoutes = async () => {
+  console.log('routes :>> ', routes);
+  return routes;
+};
