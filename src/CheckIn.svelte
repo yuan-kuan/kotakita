@@ -1,5 +1,5 @@
 <script>
-  import { checkedIn, checkIn } from '../route_store';
+  import { checkedIn, checkIn } from './route_store';
 </script>
 
 <div class="navbar is-fixed-bottom">

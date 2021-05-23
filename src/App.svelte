@@ -2,8 +2,8 @@
   import 'bulma/css/bulma.css';
 
   import { Router, Route } from 'svelte-navigator';
-  import Map from './routes/Map.svelte';
-  import Walk from './routes/Walk.svelte';
+  import Map from './Map.svelte';
+  import Walk from './Walk.svelte';
   import { tryAdminAccess, userProfile, forgetUser } from './user_store';
 
   $: userId = $userProfile.id;

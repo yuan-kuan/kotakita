@@ -1,7 +1,7 @@
 <script>
   import QRious from 'qrious';
-  import { isAdmin } from '../user_store';
-  import { visitingPlace, visitPlace } from '../route_store';
+  import { isAdmin } from './user_store';
+  import { visitingPlace, visitPlace } from './route_store';
   import CheckIn from './CheckIn.svelte';
 
   export let placeId;
@@ -18,7 +18,7 @@
   $: showingEdit = editing;
   let working = '';
   const startEdit = (attributeName) => {
-    working = place[attributeName];
+    working = $visitingPlace[attributeName];
     editing = attributeName;
   };
   const closeEdit = () => {
@@ -49,7 +49,7 @@
 
       if (respond.ok) {
         closeEdit();
-        fetchData(placeId);
+        visitPlace(placeId);
       } else {
         console.error(respond);
       }

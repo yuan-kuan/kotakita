@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { Link } from 'svelte-navigator';
-  import { isAdmin } from '../user_store';
+  import { isAdmin } from './user_store';
 
   let newPlace;
   const addNewPlace = async (id) => {
