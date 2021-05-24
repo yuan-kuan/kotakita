@@ -27,6 +27,8 @@
   const closingInfoUpdate = () => {
     isShowingInfoUpdate = false;
   };
+
+  let isAskingForget = false;
 </script>
 
 <svelte:window on:click={closeDropdown} />
@@ -57,15 +59,37 @@
         Update Information
       </a>
       <hr class="dropdown-divider" />
-      <!-- svelte-ignore a11y-invalid-attribute -->
-      <a
-        href="#"
-        class="dropdown-item"
-        on:click={forgetUser}
-        on:click={closeDropdown}
-      >
-        Forget Me
-      </a>
+
+      {#if isAskingForget}
+        <p class="dropdown-item">Are you sure?</p>
+        <a
+          href="#"
+          class="dropdown-item"
+          on:click={() => (isAskingForget = false)}
+          on:click={closeDropdown}
+        >
+          Nope
+        </a>
+        <a
+          href="#"
+          class="dropdown-item"
+          on:click={forgetUser}
+          on:click={() => (isAskingForget = false)}
+          on:click={closeDropdown}
+        >
+          Yes!
+        </a>
+      {:else}
+        <!-- svelte-ignore a11y-invalid-attribute -->
+        <a
+          href="#"
+          class="dropdown-item"
+          on:click={() => (isAskingForget = true)}
+        >
+          Forget Me
+        </a>
+      {/if}
+      <hr class="dropdown-divider" />
       <!-- svelte-ignore a11y-invalid-attribute -->
       <a
         href="#"
