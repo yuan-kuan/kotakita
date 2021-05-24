@@ -1,7 +1,15 @@
 <script>
-  import { tryAdminAccess, userProfile, forgetUser } from './user_store';
+  import {
+    tryAdminAccess,
+    userProfile,
+    forgetUser,
+    updateInfo,
+  } from './user_store';
 
-  $: name = $userProfile.id;
+  let name = $userProfile.name;
+  let age = $userProfile.age;
+  let gender = $userProfile.gender;
+  let oku = $userProfile.oku;
 
   let isShowingDropDown = false;
   const closeDropdown = () => (isShowingDropDown = false);
@@ -10,6 +18,11 @@
   const showInfoUpdate = () => {
     isShowingInfoUpdate = true;
     closeDropdown();
+  };
+
+  const saveProfile = () => {
+    updateInfo(name, age, gender, oku);
+    isShowingInfoUpdate = false;
   };
 </script>
 
@@ -60,7 +73,12 @@
       <!-- svelte-ignore a11y-label-has-associated-control -->
       <label class="label">Name</label>
       <div class="control">
-        <input class="input" type="text" placeholder="Any Name" />
+        <input
+          class="input"
+          type="text"
+          placeholder="Any Name"
+          bind:value={name}
+        />
       </div>
     </div>
 
@@ -68,27 +86,35 @@
       <!-- svelte-ignore a11y-label-has-associated-control -->
       <label class="label">Age</label>
       <div class="control">
-        <input class="input" type="number" placeholder="Your age" />
+        <input
+          class="input"
+          type="number"
+          placeholder="Your age"
+          bind:value={age}
+        />
       </div>
     </div>
 
     <div class="select mt-3">
-      <select>
-        <option>Gender</option>
-        <option>Female</option>
-        <option>Male</option>
-        <option>Private</option>
+      <select bind:value={gender}>
+        <option value="">Gender</option>
+        <option value="Female">Female</option>
+        <option value="Male">Male</option>
+        <option value="Private">Private</option>
       </select>
     </div>
 
     <label class="checkbox mt-3">
-      <input type="checkbox" />
+      <input type="checkbox" bind:checked={oku} />
       Do you identify as a person with a disability?
     </label>
 
     <div class="level mt-4">
-      <button class="button is-success">Save</button>
-      <button class="button is-warning">Cancel</button>
+      <button class="button is-success" on:click={saveProfile}>Save</button>
+      <button
+        class="button is-warning"
+        on:click={() => (isShowingInfoUpdate = false)}>Cancel</button
+      >
     </div>
   </div>
   <button

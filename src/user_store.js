@@ -33,6 +33,7 @@ export const userProfile = readable({}, (set) => {
   resetProfile = set;
   let saved = window.localStorage.getItem('userProfile');
   let user = saved ? JSON.parse(saved) : createNewUser();
+
   resetProfile(user);
 });
 
