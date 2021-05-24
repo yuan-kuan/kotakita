@@ -36,6 +36,21 @@ export const userProfile = readable({}, (set) => {
   resetProfile(user);
 });
 
+export const updateInfo = (name, age, gender, oku) => {
+  const profile = JSON.parse(window.localStorage.getItem('userProfile'));
+  profile.name = name ?? profile.name;
+  profile.age = age ?? profile.age;
+  profile.gender = gender ?? profile.gender;
+  profile.oku = oku ?? profile.oku;
+  resetProfile(profile);
+
+  try {
+    window.localStorage.setItem('userProfile', JSON.stringify(profile));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const forgetUser = () => {
   window.localStorage.removeItem('userProfile');
   let newUser = createNewUser();
