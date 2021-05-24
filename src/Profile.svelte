@@ -42,7 +42,7 @@
     <button class="button" on:click={() => (isShowingDropDown = true)}>
       <span>Setting</span>
       <span class="icon is-small">
-        <i class="fas fa-angle-down" />
+        <i class="fa fa-user-circle-o" />
       </span>
     </button>
   </div>
