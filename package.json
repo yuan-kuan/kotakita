@@ -6,7 +6,8 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "lint": "eslint src --fix",
-    "start": "npx sandbox"
+    "start": "npx sandbox",
+    "css-build": "node-sass --omit-source-map-url mystyles.scss mystyles.css"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -15,6 +16,7 @@
     "change-case": "^4.1.2",
     "eslint": "^7.19.0",
     "eslint-plugin-svelte3": "",
+    "node-sass": "^6.0.0",
     "rollup": "^2.40.0",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",

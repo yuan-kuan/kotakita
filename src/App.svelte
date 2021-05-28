@@ -1,5 +1,6 @@
 <script>
-  import 'bulma/css/bulma.css';
+  import '../mystyles.css';
+  // import 'bulma/css/bulma.css';
 
   import { Router, Route, Link } from 'svelte-navigator';
   import Map from './Map.svelte';

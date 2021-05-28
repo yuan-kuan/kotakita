@@ -40,7 +40,7 @@
 >
   <div class="dropdown-trigger">
     <span
-      class="icon is-large"
+      class="icon is-large has-text-grey-lighter"
       on:click={() => (isShowingDropDown = !isShowingDropDown)}
     >
       <i class="fa fa-2x fa-user-circle-o" />
