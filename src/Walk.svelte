@@ -106,7 +106,7 @@
   };
 </script>
 
-<figure class="image is-4by5">
+<figure class="image is-4by5" style="z-index: -1;">
   <img src={photoUrl} alt="The photo of {name}" style="object-fit: cover;" />
   <input
     style="display: none"
@@ -116,7 +116,7 @@
     on:change={photoTaken}
   />
   {#if $isAdmin}
-    <button class="button image-edit" on:click={changePhoto}>
+    <button class="button image-edit is-warning" on:click={changePhoto}>
       <span class="icon">
         <i class="fa fa-edit" />
       </span>
@@ -124,25 +124,28 @@
   {/if}
 </figure>
 
-<div class="box">
-  <p class="is-size1">{name}</p>
-  <p>{description}</p>
-</div>
-<!-- 
-<div class="title has-text-centered pt-2">
-  {name}
+<div
+  class="box px-5 has-background-primary has-text-white"
+  style="margin-top: -12px; border-radius: 15px;"
+>
+  <div>
+    <span class="is-size-3 has-text-weight-semibold" style="line-height:1em;"
+      >{name}</span
+    >
+    {#if $isAdmin}
+      <button class="button is-warning" on:click={() => startEdit('name')}>
+        Edit Name
+      </button>
+      <!-- <button class="button is-small" on:click={createQR}>QR</button> -->
+    {/if}
+  </div>
+  <p class="is-size-6" style="white-space:pre-line;">{description}</p>
   {#if $isAdmin}
-    <button on:click={() => startEdit('name')}>Edit</button>
-    <button class="button" on:click={createQR}>QR</button>
+    <button class="button is-warning" on:click={() => startEdit('description')}
+      >Edit Description</button
+    >
   {/if}
 </div>
-
-<div class="px-2 pb-2">
-  <p class="box desc">{description}</p>
-  {#if $isAdmin}
-    <button on:click={() => startEdit('description')}>Edit</button>
-  {/if}
-</div> -->
 
 <div class="modal" class:is-active={showingEdit}>
   <div class="modal-background" on:click={closeEdit} />
@@ -166,7 +169,7 @@
 </div>
 
 <!-- svelte-ignore a11y-missing-attribute -->
-<iframe
+<!-- <iframe
   src={mapUrl}
   width="400"
   height="300"
@@ -176,7 +179,7 @@
 />
 {#if $isAdmin}
   <button on:click={() => startEdit('mapUrl')}>Edit Map</button>
-{/if}
+{/if} -->
 
 <!-- <CheckIn /> -->
 
