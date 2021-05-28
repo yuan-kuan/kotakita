@@ -1,4 +1,5 @@
 <script>
+  // Build this with `npm run build-css`
   import '../mystyles.css';
   // import 'bulma/css/bulma.css';
 
@@ -9,8 +10,9 @@
   import BottomBar from './BottomBar.svelte';
 </script>
 
-<Router>
-  <div>
+<!-- Pad to show full content above bottom bar -->
+<div style="padding-bottom: 40px;">
+  <Router>
     <Route path="/">
       <Map />
     </Route>
@@ -25,16 +27,7 @@
     <Route path="/history">
       <History />
     </Route>
-  </div>
-</Router>
+  </Router>
+</div>
 
 <BottomBar />
-
-<!-- <footer class="footer is-small">
-  <div class="content">
-    <p class="title">Kota Kita</p>
-    <div class="subtitle">
-      <Profile />
-    </div>
-  </div>
-</footer> -->
