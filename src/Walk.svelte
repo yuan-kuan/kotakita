@@ -108,6 +108,20 @@
 
 <figure class="image is-4by5">
   <img src={photoUrl} alt="The photo of {name}" style="object-fit: cover;" />
+  <input
+    style="display: none"
+    bind:this={cameraInput}
+    type="file"
+    accept="image/*"
+    on:change={photoTaken}
+  />
+  {#if $isAdmin}
+    <button class="button image-edit" on:click={changePhoto}>
+      <span class="icon">
+        <i class="fa fa-edit" />
+      </span>
+    </button>
+  {/if}
 </figure>
 
 <div class="title has-text-centered pt-2">
@@ -117,17 +131,6 @@
     <button class="button" on:click={createQR}>QR</button>
   {/if}
 </div>
-
-<input
-  style="display: none"
-  bind:this={cameraInput}
-  type="file"
-  accept="image/*"
-  on:change={photoTaken}
-/>
-{#if $isAdmin}
-  <button on:click={changePhoto}>Change Photo</button>
-{/if}
 
 <div class="px-2 pb-2">
   <p class="box desc">{description}</p>
@@ -187,5 +190,12 @@
 
   .desc {
     background-color: lightgrey;
+  }
+
+  .image-edit {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin: 4px;
   }
 </style>
