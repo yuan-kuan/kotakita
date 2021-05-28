@@ -65,7 +65,7 @@
     const formData = new FormData();
     formData.append('image', blob);
 
-    const expiration = 0;
+    const expiration = 6000;
     const key = '54e0a6c82adf9b36d8df784a3a88d7c9';
     let imgbbUploadUrl = `https://api.imgbb.com/1/upload?key=${key}`;
     if (expiration > 0) {
@@ -106,6 +106,10 @@
   };
 </script>
 
+<figure class="is-image is-4by5">
+  <img src={photoUrl} alt="The photo of {name}" />
+</figure>
+
 <div class="title has-text-centered pt-2">
   {name}
   {#if $isAdmin}
@@ -114,7 +118,6 @@
   {/if}
 </div>
 
-<img src={photoUrl} alt="The photo of {name}" />
 <input
   style="display: none"
   bind:this={cameraInput}
@@ -167,7 +170,7 @@
   <button on:click={() => startEdit('mapUrl')}>Edit Map</button>
 {/if}
 
-<CheckIn />
+<!-- <CheckIn /> -->
 
 <div class="modal" class:is-active={showingQr}>
   <div class="modal-background" on:click={closeQR} />

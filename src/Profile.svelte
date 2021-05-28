@@ -34,17 +34,17 @@
 <svelte:window on:click={closeDropdown} />
 
 <div
-  class="dropdown"
+  class="dropdown is-up is-right"
   class:is-active={isShowingDropDown}
   on:click|stopPropagation
 >
   <div class="dropdown-trigger">
-    <button class="button" on:click={() => (isShowingDropDown = true)}>
-      <span>Setting</span>
-      <span class="icon is-small">
-        <i class="fa fa-user-circle-o" />
-      </span>
-    </button>
+    <span
+      class="icon is-large"
+      on:click={() => (isShowingDropDown = !isShowingDropDown)}
+    >
+      <i class="fa fa-2x fa-user-circle-o" />
+    </span>
   </div>
   <div class="dropdown-menu" id="dropdown-menu2" role="menu">
     <div class="dropdown-content">

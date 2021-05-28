@@ -5,21 +5,10 @@
   import Map from './Map.svelte';
   import Walk from './Walk.svelte';
   import History from './History.svelte';
-  import Profile from './Profile.svelte';
+  import BottomBar from './BottomBar.svelte';
 </script>
 
-<section class="hero is-warning is-small">
-  <div class="hero-body">
-    <p class="title">Kota Kita</p>
-    <div class="subtitle">
-      <Profile />
-    </div>
-  </div>
-</section>
-
 <Router>
-  <Link to="/">Map</Link>
-  <Link to="/history">history</Link>
   <div>
     <Route path="/">
       <Map />
@@ -36,4 +25,18 @@
       <History />
     </Route>
   </div>
+
+  <Link to="/">Map</Link>
+  <Link to="/history">history</Link>
 </Router>
+
+<BottomBar />
+
+<!-- <footer class="footer is-small">
+  <div class="content">
+    <p class="title">Kota Kita</p>
+    <div class="subtitle">
+      <Profile />
+    </div>
+  </div>
+</footer> -->
