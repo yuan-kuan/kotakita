@@ -26,9 +26,6 @@
       <History />
     </Route>
   </div>
-
-  <Link to="/">Map</Link>
-  <Link to="/history">history</Link>
 </Router>
 
 <BottomBar />
