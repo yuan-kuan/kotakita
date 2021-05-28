@@ -3,6 +3,7 @@
   import { isAdmin } from './user_store';
   import { visitingPlace, visitPlace } from './route_store';
   import CheckIn from './CheckIn.svelte';
+  import EmbededMap from './Embeded_Map.svelte';
 
   export let placeId;
 
@@ -139,7 +140,16 @@
       <!-- <button class="button is-small" on:click={createQR}>QR</button> -->
     {/if}
   </div>
-  <p class="is-size-6" style="white-space:pre-line;">{description}</p>
+
+  <EmbededMap {mapUrl} />
+  {#if $isAdmin}
+    <br />
+    <button class="button is-warning" on:click={() => startEdit('mapUrl')}
+      >Edit Map</button
+    >
+  {/if}
+
+  <p class="is-size-6 mt-4" style="white-space:pre-line;">{description}</p>
   {#if $isAdmin}
     <button class="button is-warning" on:click={() => startEdit('description')}
       >Edit Description</button
@@ -167,21 +177,6 @@
     on:click={closeEdit}
   />
 </div>
-
-<!-- svelte-ignore a11y-missing-attribute -->
-<!-- <iframe
-  src={mapUrl}
-  width="400"
-  height="300"
-  style="border:0;"
-  allowfullscreen=""
-  loading="lazy"
-/>
-{#if $isAdmin}
-  <button on:click={() => startEdit('mapUrl')}>Edit Map</button>
-{/if} -->
-
-<!-- <CheckIn /> -->
 
 <div class="modal" class:is-active={showingQr}>
   <div class="modal-background" on:click={closeQR} />
