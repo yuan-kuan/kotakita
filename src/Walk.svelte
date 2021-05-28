@@ -106,8 +106,8 @@
   };
 </script>
 
-<figure class="is-image is-4by5">
-  <img src={photoUrl} alt="The photo of {name}" />
+<figure class="image is-4by5">
+  <img src={photoUrl} alt="The photo of {name}" style="object-fit: cover;" />
 </figure>
 
 <div class="title has-text-centered pt-2">
