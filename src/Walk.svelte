@@ -124,6 +124,11 @@
   {/if}
 </figure>
 
+<div class="box">
+  <p class="is-size1">{name}</p>
+  <p>{description}</p>
+</div>
+<!-- 
 <div class="title has-text-centered pt-2">
   {name}
   {#if $isAdmin}
@@ -137,7 +142,7 @@
   {#if $isAdmin}
     <button on:click={() => startEdit('description')}>Edit</button>
   {/if}
-</div>
+</div> -->
 
 <div class="modal" class:is-active={showingEdit}>
   <div class="modal-background" on:click={closeEdit} />
