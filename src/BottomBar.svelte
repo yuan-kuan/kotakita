@@ -31,8 +31,6 @@
 <style>
   nav {
     /* soft top shadow */
-    -webkit-box-shadow: inset 0px 2px 1px rgb(50 50 50 / 20%)
-    -moz-box-shadow: inset 0px 2px 1px rgb(50 50 50 / 20%)
-    box-shadow: inset 0px 2px 1px rgb(50 50 50 / 20%)
+    box-shadow: inset 0px 2px 1px rgb(50 50 50 / 20%);
   }
 </style>

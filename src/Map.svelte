@@ -80,20 +80,35 @@
   };
 </script>
 
-<ul>
-  {#each places as place}
-    <li>
-      <Link to={`walk/${place.key}`}>{place.name}</Link>
-      {#if $isAdmin}
-        <button on:click={deletePlace(place.key)}>X</button>
-      {/if}
-    </li>
-  {/each}
-</ul>
-<input type="text" bind:value={newPlace} />
-<button on:click={getAllPlaces}>Refresh</button>
-<br />
-{#if $isAdmin}
-  <button on:click={addNewPlace}>Add</button>
-  <button on:click={prefill}>Pre Fill</button>
-{/if}
+<section class="section has-background-primary ">
+  <p class="title has-text-white">Map</p>
+</section>
+
+<div class="p-4">
+  <ul>
+    {#each places as place}
+      <li>
+        <Link to={`walk/${place.key}`}>
+          <div class="box my-2 is-flex is-align-items-center">
+            <figure class="image is-32x32 is-rounded">
+              <img src="/_static/favicon.png" alt="" />
+            </figure>
+            <span class="pl-2">
+              {place.name}
+            </span>
+            {#if $isAdmin}
+              <button on:click={deletePlace(place.key)}>X</button>
+            {/if}
+          </div>
+        </Link>
+      </li>
+    {/each}
+  </ul>
+  <input type="text" bind:value={newPlace} />
+  <button on:click={getAllPlaces}>Refresh</button>
+  <br />
+  {#if $isAdmin}
+    <button on:click={addNewPlace}>Add</button>
+    <button on:click={prefill}>Pre Fill</button>
+  {/if}
+</div>
