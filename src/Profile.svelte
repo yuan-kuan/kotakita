@@ -34,17 +34,20 @@
 <svelte:window on:click={closeDropdown} />
 
 <div
-  class="dropdown is-up is-right"
+  class="dropdown is-up"
   class:is-active={isShowingDropDown}
   on:click|stopPropagation
 >
   <div class="dropdown-trigger">
-    <span
-      class="icon is-large has-text-grey-lighter"
-      on:click={() => (isShowingDropDown = !isShowingDropDown)}
-    >
-      <i class="fa fa-2x fa-user-circle-o" />
-    </span>
+    <div class="is-flex is-flex-direction-column">
+      <span
+        class="icon is-medium has-text-grey-lighter"
+        on:click={() => (isShowingDropDown = !isShowingDropDown)}
+      >
+        <i class="fas fa-2x fa-user" />
+      </span>
+      <span class="is-size-7 has-text-grey-lighter">Profile</span>
+    </div>
   </div>
   <div class="dropdown-menu" id="dropdown-menu2" role="menu">
     <div class="dropdown-content">
