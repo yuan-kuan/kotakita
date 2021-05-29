@@ -20,6 +20,17 @@ exports.handler = async function http(req) {
     (a, b) => orders.data.indexOf(a.key) - orders.data.indexOf(b.key)
   );
 
+  const leanPlaces = [];
+  for (let i = 0; i < allPlaces.length; i++) {
+    const place = allPlaces[i];
+
+    leanPlaces.push({
+      key: place.key,
+      name: place.name,
+      order: i,
+    });
+  }
+
   return {
     headers: {
       'content-type': 'application/json; charset=utf8',
@@ -27,6 +38,6 @@ exports.handler = async function http(req) {
         'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0',
     },
     statusCode: 200,
-    body: JSON.stringify(allPlaces),
+    body: JSON.stringify(leanPlaces),
   };
 };

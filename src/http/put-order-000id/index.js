@@ -2,18 +2,15 @@ let data = require('@begin/data');
 let begin = require('@architect/functions');
 let admin = require('@architect/shared/admin');
 
-const deletePlace = async (req) => {
+const changeOrder = async (req) => {
   if (!admin.checkSessionAdmin(req)) {
     return admin.reject();
   }
+
   if (req.pathParameters !== false) {
-    let key = req.pathParameters.id;
+    const key = req.pathParameters.id;
+    const newOrder = req.body;
 
-    // Delete the data
-    const table = 'place';
-    await data.destroy({ table, key });
-
-    // Remove it from order
     const orderTable = 'order';
     const orderKey = 'place';
     let orderObject = await data.get({ table: orderTable, key: orderKey });
@@ -22,6 +19,9 @@ const deletePlace = async (req) => {
     let oldOrder = orders.findIndex((e) => e == key);
     // Delete the old entry
     orders.splice(oldOrder, 1);
+
+    // Insert to new place
+    orders.splice(newOrder - 1, 0, key);
 
     await data.set({
       table: orderTable,
@@ -39,4 +39,4 @@ const deletePlace = async (req) => {
   };
 };
 
-exports.handler = begin.http.async(deletePlace);
+exports.handler = begin.http.async(changeOrder);

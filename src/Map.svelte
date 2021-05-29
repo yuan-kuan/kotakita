@@ -45,9 +45,46 @@
     }
   };
 
-  const deletePlace = async (id) => {
+  let isShowingEditPlace = false;
+  let editingPlaceId;
+  let order;
+
+  const startEditPlace = (editingPlace) => {
+    editingPlaceId = editingPlace.key;
+    order = editingPlace.order + 1;
+    slug = editingPlace.key;
+    name = editingPlace.name;
+    isShowingEditPlace = true;
+  };
+
+  const changeOrder = async () => {
+    console.log(`change order to ${order} for ${editingPlaceId}`);
     try {
-      let respond = await fetch('/place/' + id, {
+      let respond = await fetch('/order/' + editingPlaceId, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: order,
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      getAllPlaces();
+      isShowingEditPlace = false;
+    }
+  };
+
+  const changeSlug = async () => {
+    console.log(`change slug to ${slug} for ${editingPlaceId}`);
+    isShowingEditPlace = false;
+  };
+
+  const deletePlace = async () => {
+    isShowingEditPlace = false;
+
+    try {
+      let respond = await fetch('/place/' + editingPlaceId, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -136,10 +173,13 @@
               <button
                 class="button is-warning is-rounded is-small"
                 style="position:absolute; top:0; right:0;"
-                on:click|stopPropagation|preventDefault|capture={deletePlace(
-                  place.key
-                )}>X</button
+                on:click|stopPropagation|preventDefault|capture={() =>
+                  startEditPlace(place)}
               >
+                <span class="icon">
+                  <i class="fa fa-edit" />
+                </span>
+              </button>
             {/if}
           </div>
         </Link>
@@ -182,5 +222,55 @@
     class="modal-close is-large"
     aria-label="close"
     on:click={() => (isShowingAddPlace = false)}
+  />
+</div>
+
+<div class="modal" class:is-active={isShowingEditPlace}>
+  <div class="modal-background" on:click={() => (isShowingEditPlace = false)} />
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Edit {name}</p>
+    </header>
+    <section class="modal-card-body">
+      <div class="box field">
+        <!-- svelte-ignore a11y-label-has-associated-control -->
+        <label class="label">Order</label>
+        <input class="input" bind:value={order} />
+        <p class="help">
+          Use lowercase and '-' only. Keep it short and sweet. As short as
+          possible. e.g. 'gaya' for 'Gaya Street', 'park' for 'City Park'.
+        </p>
+        <button class="button is-success" on:click={changeOrder}
+          >Change Order</button
+        >
+      </div>
+
+      <div class="box field">
+        <!-- svelte-ignore a11y-label-has-associated-control -->
+        <label class="label">Url</label>
+        <input class="input" bind:value={slug} />
+        <p class="help">
+          Use lowercase and '-' only. Keep it short and sweet. As short as
+          possible. e.g. 'gaya' for 'Gaya Street', 'park' for 'City Park'.
+        </p>
+        <p class="help">
+          IMPORTANT: <strong>DO NOT DUPLICATE WITH OTHERS URL</strong>
+        </p>
+        <button class="button is-success" on:click={changeSlug}
+          >Change URL</button
+        >
+      </div>
+
+      <div class="box">
+        <button class="button is-danger" on:click={deletePlace}
+          >Delete this checkpoint</button
+        >
+      </div>
+    </section>
+  </div>
+  <button
+    class="modal-close is-large"
+    aria-label="close"
+    on:click={() => (isShowingEditPlace = false)}
   />
 </div>
