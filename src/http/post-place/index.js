@@ -14,12 +14,13 @@ const addNewPlace = async (req) => {
   }
 
   const payload = req.body;
-  if (payload.newPlace) {
+  if (payload.slug) {
     const table = 'place';
-    const name = payload.newPlace;
+    const name = payload.name;
+    const slug = payload.slug;
     await data.set({
       table,
-      key: toParamCase(name),
+      key: slug,
       name,
       description: `Description needed for ${name}`,
     });

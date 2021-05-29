@@ -3,13 +3,25 @@
   import { Link } from 'svelte-navigator';
   import { isAdmin } from './user_store';
 
+  const toParamCase = (str) => {
+    if (!str) return '';
+
+    str = str.toLowerCase();
+    str = str.replace(/[ ]/g, '-');
+    return str;
+  };
+
   let isShowingAddPlace = false;
-  let newPlaceSlug;
-  let newPlace;
+  let slug;
+  let name;
+  $: {
+    slug = toParamCase(name);
+  }
+
   const addNewPlace = async () => {
     isShowingAddPlace = false;
 
-    if (newPlace == 'p') return prefill();
+    if (name == 'p') return prefill();
 
     try {
       let respond = await fetch('/place', {
@@ -18,12 +30,12 @@
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ newPlace }),
+        body: JSON.stringify({ name, slug }),
       });
 
       if (respond.ok) {
-        newPlaceSlug = '';
-        newPlace = '';
+        slug = '';
+        name = '';
         getAllPlaces();
       } else {
         console.error(respond);
@@ -91,7 +103,7 @@
 </script>
 
 <section class="section has-background-primary ">
-  <p class="title has-text-white">Map</p>
+  <p class="title has-text-white">Check-points</p>
 </section>
 
 {#if $isAdmin}
@@ -105,7 +117,7 @@
   <ul>
     {#each places as place}
       <li>
-        <Link to={`walk/${place.key}`}>
+        <Link to={`${place.key}`}>
           <div
             class="box my-2 is-flex is-align-items-center"
             style="position:relative;"
@@ -143,12 +155,12 @@
       <div class="field">
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label">Name</label>
-        <input class="input" bind:value={newPlace} />
+        <input class="input" bind:value={name} />
       </div>
       <div class="field">
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label">Url</label>
-        <input class="input" bind:value={newPlaceSlug} />
+        <input class="input" bind:value={slug} />
       </div>
     </section>
     <footer class="modal-card-foot">

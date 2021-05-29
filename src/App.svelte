@@ -13,8 +13,9 @@
 <!-- Pad to show full content above bottom bar -->
 <div style="padding-bottom: 40px;">
   <Router>
-    <Route path="/">
-      <Map />
+    <Route path="/" let:navigate>
+      Redirecting...
+      {navigate('walk')}
     </Route>
     <Route path="walk/*">
       <Route path="/">
