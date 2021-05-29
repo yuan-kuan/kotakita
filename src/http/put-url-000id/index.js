@@ -18,8 +18,6 @@ const changeUrl = async (req) => {
       return { statusCode: 404 };
     }
 
-    console.log('newUrl :>> ', newUrl);
-    console.log('place :>> ', place);
     place.key = newUrl;
     await data.set(place);
 
@@ -30,6 +28,7 @@ const changeUrl = async (req) => {
     const orderKey = 'place';
     let orderObject = await data.get({ table: orderTable, key: orderKey });
     const orders = orderObject.data;
+    console.info(`Old orders: ${JSON.stringify(orders)}`);
 
     let oldOrder = orders.findIndex((e) => e == key);
     // Delete the old entry
@@ -37,6 +36,8 @@ const changeUrl = async (req) => {
 
     // Insert to new place
     orders.splice(oldOrder, 0, newUrl);
+
+    console.info(`New orders: ${JSON.stringify(orders)}`);
 
     await data.set({
       table: orderTable,

@@ -19,8 +19,6 @@ exports.handler = async function http(req) {
   allPlaces.sort(
     (a, b) => orders.data.indexOf(a.key) - orders.data.indexOf(b.key)
   );
-  console.log('orders :>> ', orders);
-  console.log('allPlaces :>> ', allPlaces);
 
   const leanPlaces = [];
   for (let i = 0; i < allPlaces.length; i++) {

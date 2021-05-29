@@ -9,12 +9,7 @@ const addNewPlace = async (req) => {
 
   const payload = req.body;
   if (payload.slug) {
-    const orderTable = 'order';
-    const orderKey = 'place';
-    let orders = await data.get({ table: orderTable, key: orderKey });
-    if (orders == null) {
-      orders = { data: [] };
-    }
+    console.info(`Adding new Check Point with: ${JSON.stringify(payload)}`);
 
     const table = 'place';
     const name = payload.name;
@@ -27,11 +22,22 @@ const addNewPlace = async (req) => {
       description: `Description needed for ${name}`,
     });
 
-    orders.data.push(slug);
+    const orderTable = 'order';
+    const orderKey = 'place';
+    let orderObject = await data.get({ table: orderTable, key: orderKey });
+
+    let orders = [];
+    if (orderObject) {
+      orders = orderObject.data;
+    }
+
+    orders.push(slug);
+    console.info(`New orders: ${JSON.stringify(orders)}`);
+
     await data.set({
       table: orderTable,
       key: orderKey,
-      ...orders,
+      data: orders,
     });
   }
 

@@ -23,6 +23,8 @@ const deletePlace = async (req) => {
     // Delete the old entry
     orders.splice(oldOrder, 1);
 
+    console.info(`New orders: ${JSON.stringify(orders)}`);
+
     await data.set({
       table: orderTable,
       key: orderKey,

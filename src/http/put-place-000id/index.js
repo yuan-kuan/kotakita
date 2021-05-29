@@ -17,7 +17,10 @@ const updatePlace = async (req) => {
       return { statusCode: 404 };
     }
 
+    console.info(`Old: ${JSON.stringify(place)}`);
     const updatedPlace = Object.assign(place, payload);
+    console.info(`New: ${JSON.stringify(updatedPlace)}`);
+
     await data.set({
       table,
       key,
