@@ -129,6 +129,10 @@
               {place.name}
             </span>
             {#if $isAdmin}
+              <div style="position:absolute; bottom:0; right:0;">
+                <span class="has-text-warning"> url:</span>
+                <span>{place.key}</span>
+              </div>
               <button
                 class="button is-warning is-rounded is-small"
                 style="position:absolute; top:0; right:0;"
@@ -161,6 +165,13 @@
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label">Url</label>
         <input class="input" bind:value={slug} />
+        <p class="help">
+          Use lowercase and '-' only. Keep it short and sweet. As short as
+          possible. e.g. 'gaya' for 'Gaya Street', 'park' for 'City Park'.
+        </p>
+        <p class="help">
+          IMPORTANT: <strong>DO NOT DUPLICATE WITH OTHERS URL</strong>
+        </p>
       </div>
     </section>
     <footer class="modal-card-foot">
