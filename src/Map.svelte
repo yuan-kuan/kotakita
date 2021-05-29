@@ -65,7 +65,7 @@
     }
 
     try {
-      let respond = await fetch('/order/' + editingPlaceId, {
+      await fetch('/order/' + editingPlaceId, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +89,7 @@
     }
 
     try {
-      let respond = await fetch('/url/' + editingPlaceId, {
+      await fetch('/url/' + editingPlaceId, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

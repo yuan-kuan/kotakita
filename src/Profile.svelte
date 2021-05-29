@@ -65,6 +65,7 @@
 
       {#if isAskingForget}
         <p class="dropdown-item">Are you sure?</p>
+        <!-- svelte-ignore a11y-invalid-attribute -->
         <a
           href="#"
           class="dropdown-item"
@@ -73,6 +74,7 @@
         >
           Nope
         </a>
+        <!-- svelte-ignore a11y-invalid-attribute -->
         <a
           href="#"
           class="dropdown-item"

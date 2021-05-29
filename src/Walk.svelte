@@ -1,8 +1,7 @@
 <script>
-  import QRious from 'qrious';
+  // import QRious from 'qrious';
   import { isAdmin } from './user_store';
   import { visitingPlace, visitPlace } from './route_store';
-  import CheckIn from './CheckIn.svelte';
   import EmbededMap from './Embeded_Map.svelte';
 
   export let placeId;
@@ -96,12 +95,12 @@
 
   let showingQr = false;
   let qrCanvas;
-  const createQR = () => {
-    const data = window.location.toString();
-    new QRious({ element: qrCanvas, value: data, size: 300 });
+  // const createQR = () => {
+  //   const data = window.location.toString();
+  //   new QRious({ element: qrCanvas, value: data, size: 300 });
 
-    showingQr = true;
-  };
+  //   showingQr = true;
+  // };
   const closeQR = () => {
     showingQr = false;
   };
@@ -189,10 +188,6 @@
 <style>
   .modal-content {
     width: auto;
-  }
-
-  .desc {
-    background-color: lightgrey;
   }
 
   .image-edit {

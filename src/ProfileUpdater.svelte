@@ -6,12 +6,6 @@
   let gender = $userProfile.gender;
   let oku = $userProfile.oku;
 
-  let isShowingInfoUpdate = false;
-  const showInfoUpdate = () => {
-    isShowingInfoUpdate = true;
-    closeDropdown();
-  };
-
   const saveProfile = () => {
     updateInfo(name, age, gender, oku);
   };
