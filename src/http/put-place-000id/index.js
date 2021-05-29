@@ -18,8 +18,6 @@ const updatePlace = async (req) => {
     }
 
     const updatedPlace = Object.assign(place, payload);
-    console.log('updatedPlace :>> ', updatedPlace);
-
     await data.set({
       table,
       key,

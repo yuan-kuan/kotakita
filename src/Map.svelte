@@ -58,7 +58,12 @@
   };
 
   const changeOrder = async () => {
-    console.log(`change order to ${order} for ${editingPlaceId}`);
+    if (order < 1 || order > places.length) {
+      console.error(`order ${order} is out of range`);
+      isShowingEditPlace = false;
+      return;
+    }
+
     try {
       let respond = await fetch('/order/' + editingPlaceId, {
         method: 'PUT',
@@ -76,8 +81,27 @@
   };
 
   const changeSlug = async () => {
-    console.log(`change slug to ${slug} for ${editingPlaceId}`);
-    isShowingEditPlace = false;
+    // Do not allow Url change if slug is the same
+    if (slug == editingPlaceId) {
+      console.error(`url ${slug} has not changed.`);
+      isShowingEditPlace = false;
+      return;
+    }
+
+    try {
+      let respond = await fetch('/url/' + editingPlaceId, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(slug),
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      getAllPlaces();
+      isShowingEditPlace = false;
+    }
   };
 
   const deletePlace = async () => {
