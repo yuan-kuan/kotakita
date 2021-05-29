@@ -2,12 +2,6 @@ let begin = require('@architect/functions');
 let data = require('@begin/data');
 let admin = require('@architect/shared/admin');
 
-const toParamCase = (str) => {
-  str = str.toLowerCase();
-  str = str.replace(/[ ]/g, '-');
-  return str;
-};
-
 const addNewPlace = async (req) => {
   if (!admin.checkSessionAdmin(req)) {
     return admin.reject();
@@ -15,14 +9,29 @@ const addNewPlace = async (req) => {
 
   const payload = req.body;
   if (payload.slug) {
+    const orderTable = 'order';
+    const orderKey = 'place';
+    let orders = await data.get({ table: orderTable, key: orderKey });
+    if (orders == null) {
+      orders = { data: [] };
+    }
+
     const table = 'place';
     const name = payload.name;
     const slug = payload.slug;
+
     await data.set({
       table,
       key: slug,
       name,
       description: `Description needed for ${name}`,
+    });
+
+    orders.data.push(slug);
+    await data.set({
+      table: orderTable,
+      key: orderKey,
+      ...orders,
     });
   }
 
