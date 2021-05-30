@@ -16,12 +16,14 @@
 
   let editing;
   $: showingEdit = editing;
+  $: showingPendingEdit = editing == 'photoUrl';
   let working = '';
   const startEdit = (attributeName) => {
     working = $visitingPlace[attributeName];
     editing = attributeName;
   };
   const closeEdit = () => {
+    working = '';
     editing = null;
   };
   const editDescription = async () => {
@@ -38,7 +40,6 @@
       }
 
       n[editing] = working;
-      console.log('editing update ', JSON.stringify(n));
       let respond = await fetch('/place/' + placeId, {
         method: 'PUT',
         headers: {
@@ -61,11 +62,14 @@
   let cameraInput;
   const changePhoto = () => cameraInput.click();
   const photoTaken = async (e) => {
+    // Open up the edit modal
+    editing = 'photoUrl';
+
     const blob = e.target.files[0];
     const formData = new FormData();
     formData.append('image', blob);
 
-    const expiration = 6000;
+    const expiration = 60000;
     const key = '54e0a6c82adf9b36d8df784a3a88d7c9';
     let imgbbUploadUrl = `https://api.imgbb.com/1/upload?key=${key}`;
     if (expiration > 0) {
@@ -82,7 +86,6 @@
         const imgbbResult = await respond.json();
         const mediumUrl = imgbbResult.data.medium.url;
 
-        editing = 'photoUrl';
         working = mediumUrl;
         editDescription();
       } else {
@@ -106,22 +109,22 @@
   };
 </script>
 
+<input
+  style="display: none"
+  bind:this={cameraInput}
+  type="file"
+  accept="image/*"
+  on:change={photoTaken}
+/>
+{#if $isAdmin}
+  <button class="button image-edit is-warning" on:click={changePhoto}>
+    <span class="icon">
+      <i class="fa fa-edit" />
+    </span>
+  </button>
+{/if}
 <figure class="image is-4by5" style="z-index: -1;">
   <img src={photoUrl} alt="The photo of {name}" style="object-fit: cover;" />
-  <input
-    style="display: none"
-    bind:this={cameraInput}
-    type="file"
-    accept="image/*"
-    on:change={photoTaken}
-  />
-  {#if $isAdmin}
-    <button class="button image-edit is-warning" on:click={changePhoto}>
-      <span class="icon">
-        <i class="fa fa-edit" />
-      </span>
-    </button>
-  {/if}
 </figure>
 
 <div
@@ -163,11 +166,21 @@
       <p class="modal-card-title">Edit {editing}</p>
     </header>
     <section class="modal-card-body">
-      <textarea class="textarea" bind:value={working} />
+      <div class="control" class:is-loading={showingPendingEdit}>
+        <textarea class="textarea" bind:value={working} />
+      </div>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success" on:click={editDescription}>Save</button>
-      <button class="button" on:click={closeEdit}>Cancel</button>
+      <button
+        class="button is-success"
+        class:is-loading={showingPendingEdit}
+        on:click={editDescription}>Save</button
+      >
+      <button
+        class="button"
+        class:is-loading={showingPendingEdit}
+        on:click={closeEdit}>Cancel</button
+      >
     </footer>
   </div>
   <button
