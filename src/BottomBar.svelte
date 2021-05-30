@@ -1,4 +1,5 @@
 <script>
+  import { navigate } from 'svelte-navigator';
   import Profile from './Profile.svelte';
 </script>
 
@@ -13,7 +14,10 @@
     <span class="is-size-7 has-text-grey-lighter">Itinerary</span>
   </div>
 
-  <div class="level-item is-flex-direction-column">
+  <div
+    class="level-item is-flex-direction-column"
+    on:click={() => navigate('/walk')}
+  >
     <span class="icon is-medium has-text-primary ">
       <i class="fas fa-2x fa-map-marked-alt" />
     </span>
