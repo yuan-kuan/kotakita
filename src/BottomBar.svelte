@@ -3,7 +3,10 @@
   import Profile from './Profile.svelte';
 </script>
 
-<nav class="level py-2 navbar is-fixed-bottom is-mobile">
+<nav
+  class="container level py-2 navbar is-fixed-bottom is-mobile"
+  style="max-width: 640px;"
+>
   <div class="level-item">
     <Profile />
   </div>

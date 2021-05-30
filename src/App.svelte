@@ -11,7 +11,7 @@
 </script>
 
 <!-- Pad to show full content above bottom bar -->
-<div style="padding-bottom: 40px;">
+<div class="container" style="max-width: 640px; padding-bottom: 40px;">
   <Router>
     <Route path="/" let:navigate>
       Redirecting...
