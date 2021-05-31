@@ -1,5 +1,7 @@
 <script>
   // import QRious from 'qrious';
+  import { onDestroy } from 'svelte';
+  import { fade } from 'svelte/transition';
   import { isAdmin } from './user_store';
   import { visitingPlace, visitPlace } from './route_store';
   import EmbededMap from './Embeded_Map.svelte';
@@ -13,6 +15,10 @@
   $: description = $visitingPlace.description;
   $: photoUrl = $visitingPlace.photoUrl;
   $: mapUrl = $visitingPlace.mapUrl;
+
+  onDestroy(() => {
+    visitingPlace.set({});
+  });
 
   let editing;
   $: showingEdit = editing;
@@ -123,8 +129,15 @@
     </span>
   </button>
 {/if}
-<figure class="image is-4by5" style="z-index: -1;">
-  <img src={photoUrl} alt="The photo of {name}" style="object-fit: cover;" />
+<figure class="image is-1by1 has-background-info" style="z-index: -1;">
+  {#if photoUrl}
+    <img
+      in:fade
+      src={photoUrl}
+      alt="The photo of {name}"
+      style="object-fit: cover;"
+    />
+  {/if}
 </figure>
 
 <div
@@ -132,18 +145,24 @@
   style="margin-top: -12px; border-radius: 15px;"
 >
   <div>
-    <span class="is-size-3 has-text-weight-semibold" style="line-height:1em;"
-      >{name}</span
-    >
-    {#if $isAdmin}
-      <button class="button is-warning" on:click={() => startEdit('name')}>
-        Edit Name
-      </button>
-      <!-- <button class="button is-small" on:click={createQR}>QR</button> -->
+    {#if name}
+      <span
+        in:fade
+        class="is-size-3 has-text-weight-semibold"
+        style="line-height:1em;">{name}</span
+      >
+      {#if $isAdmin}
+        <button class="button is-warning" on:click={() => startEdit('name')}>
+          Edit Name
+        </button>
+        <!-- <button class="button is-small" on:click={createQR}>QR</button> -->
+      {/if}
     {/if}
   </div>
 
-  <EmbededMap {mapUrl} />
+  {#if mapUrl}
+    <EmbededMap {mapUrl} />
+  {/if}
   {#if $isAdmin}
     <br />
     <button class="button is-warning" on:click={() => startEdit('mapUrl')}
@@ -151,11 +170,16 @@
     >
   {/if}
 
-  <p class="is-size-6 mt-4" style="white-space:pre-line;">{description}</p>
-  {#if $isAdmin}
-    <button class="button is-warning" on:click={() => startEdit('description')}
-      >Edit Description</button
-    >
+  {#if description}
+    <p in:fade class="is-size-6 mt-4" style="white-space:pre-line;">
+      {description}
+    </p>
+    {#if $isAdmin}
+      <button
+        class="button is-warning"
+        on:click={() => startEdit('description')}>Edit Description</button
+      >
+    {/if}
   {/if}
 </div>
 
