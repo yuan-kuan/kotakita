@@ -26,17 +26,19 @@ width: 72px; -->
 </div>
 
 <div
-  class="is-flex has-background-light has-text-white has-text-centered"
+  class="is-flex is-flex-direction-row-reverse has-background-light"
   style="
   margin-top: -32px;
-  padding-bottom: 18px;
+  padding-bottom: 20px;
   margin-bottom: -20px;
   border-radius: 6px;
   "
 >
-  <div>
+  <span class="is-flex-shrink-0" style="width: 88px;" />
+
+  <div class="is-size-7 has-text-white has-text-right">
     {#if $checkedIn}
-      Already Checked In, welcome!
+      Already Checked In, welcome! Longer test
     {:else}
       New here? Check in first!
     {/if}

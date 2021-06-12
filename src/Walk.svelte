@@ -150,11 +150,7 @@
 >
   <div>
     {#if name}
-      <span
-        in:fade
-        class="is-size-3 has-text-weight-semibold"
-        style="line-height:1em;">{name}</span
-      >
+      <span in:fade class="is-size-3" style="line-height:1em;">{name}</span>
       {#if $isAdmin}
         <button class="button is-warning" on:click={() => startEdit('name')}>
           Edit Name
