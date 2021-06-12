@@ -10,7 +10,10 @@
   <div class="level-item">
     <Profile />
   </div>
-  <div class="level-item is-flex-direction-column">
+  <div
+    class="level-item is-flex-direction-column"
+    on:click={() => navigate('/history')}
+  >
     <span class="icon is-medium has-text-grey-lighter">
       <i class="fas fa-2x fa-map-marker-alt" />
     </span>

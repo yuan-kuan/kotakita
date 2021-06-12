@@ -2,18 +2,14 @@
   import { checkedIn, checkIn } from './route_store';
 </script>
 
-<!-- background-image: url('/_static/bookmark-star-fill.svg');
-background-repeat: no-repeat;
-height: 72px;
-width: 72px; -->
 <div
   class="has-text-link"
   style="
-
   margin-top: -48px;
   position: absolute;
   right: 16px;
   "
+  on:click={checkIn}
 >
   <img
     style="
@@ -38,7 +34,7 @@ width: 72px; -->
 
   <div class="is-size-7 has-text-white has-text-right">
     {#if $checkedIn}
-      Already Checked In, welcome! Longer test
+      Already Checked In, welcome!
     {:else}
       New here? Check in first!
     {/if}
