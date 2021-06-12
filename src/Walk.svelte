@@ -5,6 +5,7 @@
   import { isAdmin } from './user_store';
   import { visitingPlace, visitPlace } from './route_store';
   import EmbededMap from './Embeded_Map.svelte';
+  import CheckIn from './CheckIn.svelte';
 
   export let placeId;
 
@@ -75,7 +76,8 @@
     const formData = new FormData();
     formData.append('image', blob);
 
-    const expiration = 60000;
+    // const expiration = 60000;
+    const expiration = 0;
     const key = '54e0a6c82adf9b36d8df784a3a88d7c9';
     let imgbbUploadUrl = `https://api.imgbb.com/1/upload?key=${key}`;
     if (expiration > 0) {
@@ -140,9 +142,11 @@
   {/if}
 </figure>
 
+<CheckIn />
+
 <div
   class="box px-5 has-background-primary has-text-white"
-  style="margin-top: -12px; border-radius: 15px;"
+  style="border-radius: 15px;"
 >
   <div>
     {#if name}
