@@ -4,10 +4,18 @@ $family-sans-serif: 'Roboto', sans-serif;
 $primary: #77cdfe;
 $info: #0085d9;
 $link: #01267f;
+$danger: #f5332a;
 $light: hsla(222, 98%, 25%, 0.5);
 $grey-lighter: #c2c2c2;
 $grey-darker: #2d384c;
 
+$steps-default-color: $grey-lighter;
+$steps-completed-color: $primary;
+$steps-active-color: $primary;
+$steps-marker-size: 1.2;
+$steps-divider-size: 1px;
+
 $section-padding: 1rem 1rem;
 
 @import './node_modules/bulma/bulma.sass';
+@import './node_modules/bulma-o-steps/bulma-steps.sass';

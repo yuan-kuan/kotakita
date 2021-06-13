@@ -29,6 +29,7 @@
     "@architect/functions": "^3.13.11",
     "@architect/sandbox": "^3.3.7",
     "@begin/data": "^1.2.3",
+    "bulma-o-steps": "^1.1.0",
     "qrious": "^4.0.2",
     "svelte-navigator": "^3.1.5"
   }
