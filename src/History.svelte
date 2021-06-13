@@ -1,5 +1,20 @@
 <script>
   import { getTodayRoutes } from './route_store';
+
+  const prettyDateTime = (ms) => {
+    const d = new Date(ms);
+    var options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+
+    console.log(d.toLocaleDateString('en-US', options)); // Saturday, September 17, 2016
+    return d.toLocaleDateString('en-US', options);
+  };
 </script>
 
 <section class="section has-background-primary ">
@@ -15,9 +30,9 @@
         <li class="steps-segment">
           <span href="#" class="steps-marker" />
           <div class="steps-content pb-5">
-            <p class="is-size-4">{route}</p>
+            <p class="is-size-4">{route[0]}</p>
             <p class="is-size-7 has-text-weight-light">
-              Sat Jun 12 20:05:19 MYT 2021
+              {prettyDateTime(route[1])}
             </p>
             <button class="button pt-4 is-link is-inverted">
               <span class="icon">

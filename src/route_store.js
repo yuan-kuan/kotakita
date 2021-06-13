@@ -20,13 +20,19 @@ export const visitPlace = async (placeId) => {
   }
 };
 
-const msOfADay = 1000 * 60 * 60 * 24;
-const getTodayMs = () => Math.floor(Date.now() / msOfADay);
-const keyForRoute = (dayMs) => `r_${dayMs}`;
+const getTodayKey = () => {
+  const now = new Date();
+  let key = `${now.getFullYear() - 2000}`;
+  key += now.getMonth().toString().padStart(2, '0');
+  key += now.getDate().toString().padStart(2, '0');
+  return key;
+};
+
+const keyForRoute = (dayKey) => `ro_${dayKey}`;
 
 const routeGetter = () => {
   let routes = JSON.parse(
-    window.localStorage.getItem(keyForRoute(getTodayMs())) ?? '[]'
+    window.localStorage.getItem(keyForRoute(getTodayKey())) ?? '[]'
   );
   return () => routes;
 };
@@ -42,16 +48,17 @@ export const routes = readable([], (set) => {
 export const checkedIn = writable(false);
 const determineCheckedInStatus = () => {
   let routes = getCurrentRoute();
-  if (routes.length > 0) checkedIn.set(routes.slice(-1)[0] == visitingPlaceId);
+  if (routes.length > 0)
+    checkedIn.set(routes.slice(-1)[0][0] == visitingPlaceId);
   else checkedIn.set(false);
 };
 
 export const checkIn = () => {
   let routes = getCurrentRoute();
-  routes.push(visitingPlaceId);
+  routes.push([visitingPlaceId, Date.now()]);
   try {
     window.localStorage.setItem(
-      keyForRoute(getTodayMs()),
+      keyForRoute(getTodayKey()),
       JSON.stringify(routes)
     );
   } catch (error) {
