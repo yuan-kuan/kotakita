@@ -5,7 +5,7 @@ $primary: #77cdfe;
 $info: #0085d9;
 $link: #01267f;
 $danger: #f5332a;
-$light: hsla(222, 98%, 25%, 0.5);
+$light: hsla(222, 98%, 25%, 0.75);
 $grey-lighter: #c2c2c2;
 $grey-darker: #2d384c;
 
@@ -17,5 +17,5 @@ $steps-divider-size: 1px;
 
 $section-padding: 1rem 1rem;
 
-@import './node_modules/bulma/bulma.sass';
 @import './node_modules/bulma-o-steps/bulma-steps.sass';
+@import './node_modules/bulma/bulma.sass';
