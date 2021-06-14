@@ -1,4 +1,5 @@
 <script>
+  import Rating from './Rating.svelte';
   import { getTodayRoutes, rateTheRoute } from './route_store';
 
   const prettyDateTime = (ms) => {
@@ -16,10 +17,14 @@
     return d.toLocaleDateString('en-US', options);
   };
 
+  var isRating = false;
+  var activeRating;
   const rate = (rating) => {
-    let inc = rating.rating ?? 0;
-    rateTheRoute(rating.key, inc++);
+    isRating = true;
+    activeRating = rating;
   };
+
+  const stopRating = () => (isRating = false);
 </script>
 
 <section class="section has-background-primary ">
@@ -59,6 +64,10 @@
     </ul>
   </div>
 {/await}
+
+{#if isRating}
+  <Rating on:click={stopRating} />
+{/if}
 
 <style>
   /* Direct hack onto steps content */
