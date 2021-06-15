@@ -8,6 +8,7 @@
   import Walk from './Walk.svelte';
   import History from './History.svelte';
   import BottomBar from './BottomBar.svelte';
+  import Admin from './Admin.svelte';
 </script>
 
 <!-- Pad to show full content above bottom bar -->
@@ -27,6 +28,9 @@
     </Route>
     <Route path="/history">
       <History />
+    </Route>
+    <Route path="/office">
+      <Admin />
     </Route>
   </Router>
 </div>
