@@ -5,8 +5,9 @@ $primary: #77cdfe;
 $info: #0085d9;
 $link: #01267f;
 $danger: #f5332a;
-$light: hsla(222, 98%, 25%, 0.75);
+$light: #cccccc;
 $grey-lighter: #c2c2c2;
+$grey-dark: #2d384c;
 $grey-darker: #2d384c;
 
 $steps-default-color: $grey-lighter;
@@ -16,6 +17,8 @@ $steps-marker-size: 1.2;
 $steps-divider-size: 1px;
 
 $section-padding: 1rem 1rem;
+
+$modal-card-head-background-color: $primary;
 
 @import './node_modules/bulma-o-steps/bulma-steps.sass';
 @import './node_modules/bulma/bulma.sass';
