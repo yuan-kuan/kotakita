@@ -11,6 +11,9 @@ delete /place/:id
 get /all-places
 post /place
 post /prefill
+get /all-questions
+post /question
+put /question/:id
 
 @shared
 src src/shared # this is the default
