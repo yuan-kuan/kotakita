@@ -1,5 +1,6 @@
 import { readable } from 'svelte/store';
 
+let activeRatingKey;
 let activeRating;
 let settingCurrentRating;
 export const currentRating = readable(
@@ -17,22 +18,28 @@ const getKeyForRating = (from, to) => {
   key += '_';
   key += toPlace;
   key += '_';
-  key += toTime.toString();
+  key += toTime.toString(36);
 
   return key;
 };
 
-export const startRating = (from, to) => {
-  // const key = getKeyForRating(from, to);
+export const startRating = async (from, to) => {
+  activeRatingKey = getKeyForRating(from, to);
 
-  activeRating = [];
+  activeRating = await getSimpleRating(from, to);
   settingCurrentRating(activeRating);
 };
 
 export const rate = (questionId, value, comment) => {
-  activeRating.push([questionId, value, comment]);
+  activeRating[questionId] = [value, comment];
   console.log('activeRating :>> ', activeRating);
-  settingCurrentRating(activeRating);
+
+  try {
+    window.localStorage.setItem(activeRatingKey, JSON.stringify(activeRating));
+    settingCurrentRating(activeRating);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const createRatingForRoute = (from, to) => {
@@ -47,4 +54,4 @@ export const createRatingForRoute = (from, to) => {
 };
 
 export const getSimpleRating = (from, to) =>
-  JSON.parse(window.localStorage.getItem(getKeyForRating(from, to)) ?? '[]');
+  JSON.parse(window.localStorage.getItem(getKeyForRating(from, to)) ?? '{}');

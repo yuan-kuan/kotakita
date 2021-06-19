@@ -10,36 +10,6 @@
 
   onMount(() => prepareQuestion());
 
-  // let questions = [
-  //   {
-  //     id: 0,
-  //     body: 'Question 1 is short',
-  //     type: 'scale',
-  //     aoc: true,
-  //     disabled: false,
-  //   },
-  //   {
-  //     id: 56,
-  //     body: 'Question 2 is longer, and it has been reordered',
-  //     type: 'yesno',
-  //     aoc: false,
-  //     disabled: false,
-  //   },
-  //   {
-  //     id: 2,
-  //     body: 'Question 3 is disabled',
-  //     type: 'yesno',
-  //     aoc: false,
-  //     disabled: true,
-  //   },
-  //   {
-  //     id: 3,
-  //     body: 'Question 4 Longgg, really long. why would you ask so long a question? See? it keep coming, it failes to stop. stop',
-  //     type: 'openend',
-  //     aoc: true,
-  //     disabled: false,
-  //   },
-  // ];
   let isShowingEditQuestion = false;
 
   let questionId;

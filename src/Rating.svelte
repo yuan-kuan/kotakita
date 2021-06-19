@@ -11,6 +11,7 @@
     startRating(from, to);
   });
 
+  let preparing = true;
   let rateCompleted = false;
 
   //let QuestionSection;
@@ -19,17 +20,22 @@
   let questionBody;
 
   $: {
-    const questionIndex = $currentRating.length;
-    if (questionIndex >= $allQuestions.length) {
-      rateCompleted = true;
+    if ($allQuestions == undefined || $currentRating == undefined) {
+      // Not ready yet;
+      preparing = false;
     } else {
-      rateCompleted = false;
-      const question = $allQuestions[questionIndex];
+      const questionIndex = Object.keys($currentRating).length;
+      if (questionIndex >= $allQuestions.length) {
+        rateCompleted = true;
+      } else {
+        rateCompleted = false;
+        const question = $allQuestions[questionIndex];
 
-      console.log('question :>> ', question);
-      questionKey = question?.key;
-      questionType = question?.type;
-      questionBody = question?.body;
+        console.log('question :>> ', question);
+        questionKey = question?.key;
+        questionType = question?.type;
+        questionBody = question?.body;
+      }
     }
   }
 
