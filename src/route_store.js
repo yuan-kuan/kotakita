@@ -66,12 +66,6 @@ export const checkIn = () => {
     console.error(error);
   }
 
-  if (routes.length > 1) {
-    const lastTwo = routes.slice(-2);
-    console.log('lastTwo :>> ', lastTwo);
-    createRatingForRoute(lastTwo[0], lastTwo[1]);
-  }
-
   determineCheckedInStatus();
 };
 

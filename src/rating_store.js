@@ -42,16 +42,5 @@ export const rate = (questionId, value, comment) => {
   }
 };
 
-export const createRatingForRoute = (from, to) => {
-  const key = getKeyForRating(from, to);
-  console.log('key :>> ', key);
-
-  try {
-    window.localStorage.setItem(key, JSON.stringify([]));
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 export const getSimpleRating = (from, to) =>
   JSON.parse(window.localStorage.getItem(getKeyForRating(from, to)) ?? '{}');

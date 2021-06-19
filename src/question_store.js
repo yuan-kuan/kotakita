@@ -10,7 +10,11 @@ export const prepareQuestion = async () => {
     let respond = await fetch('/all-questions');
     const questions = await respond.json();
     console.log('questions :>> ', questions);
-    settingAllQuestion(questions);
+    const questionObject = {};
+    questions.forEach((q) => {
+      questionObject[q.key] = q;
+    });
+    settingAllQuestion(questionObject);
   } catch (error) {
     console.error(error);
   }

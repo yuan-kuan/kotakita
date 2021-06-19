@@ -14,27 +14,55 @@
   let preparing = true;
   let rateCompleted = false;
 
+  let index = 0;
+
   //let QuestionSection;
   let questionKey;
   let questionType;
   let questionBody;
+
+  const findNextUnansweredQuestionKey = () => {
+    const questionKeys = Object.keys($allQuestions).sort();
+    const latestRatedQuestionKey =
+      Object.keys($currentRating).sort().pop() ?? questionKeys[0];
+
+    if (latestRatedQuestionKey) {
+      const index = questionKeys.indexOf(latestRatedQuestionKey);
+      if (index == questionKeys.length - 1) {
+        rateCompleted = true;
+      } else {
+        rateCompleted = false;
+        const question = $allQuestions[questionKeys[index]];
+
+        console.log('question :>> ', question);
+        questionKey = question?.key;
+        questionType = question?.type;
+        questionBody = question?.body;
+      }
+    }
+  };
 
   $: {
     if ($allQuestions == undefined || $currentRating == undefined) {
       // Not ready yet;
       preparing = false;
     } else {
-      const questionIndex = Object.keys($currentRating).length;
-      if (questionIndex >= $allQuestions.length) {
-        rateCompleted = true;
-      } else {
-        rateCompleted = false;
-        const question = $allQuestions[questionIndex];
+      const questionKeys = Object.keys($allQuestions).sort();
+      const latestRatedQuestionKey =
+        Object.keys($currentRating).sort().pop() ?? questionKeys[0];
 
-        console.log('question :>> ', question);
-        questionKey = question?.key;
-        questionType = question?.type;
-        questionBody = question?.body;
+      if (latestRatedQuestionKey) {
+        const index = questionKeys.indexOf(latestRatedQuestionKey) + 1;
+        if (index >= questionKeys.length - 1) {
+          rateCompleted = true;
+        } else {
+          rateCompleted = false;
+          const question = $allQuestions[questionKeys[index]];
+
+          questionKey = question?.key;
+          questionType = question?.type;
+          questionBody = question?.body;
+        }
       }
     }
   }
