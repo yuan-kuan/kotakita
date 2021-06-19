@@ -1,6 +1,6 @@
 <script>
   import Rating from './Rating.svelte';
-  import { getTodayRoutes, rateTheRoute } from './route_store';
+  import { getTodayRoutes } from './route_store';
 
   const prettyDateTime = (ms) => {
     const d = new Date(ms);
@@ -18,10 +18,10 @@
   };
 
   var isRating = false;
-  var activeRating;
-  const rate = (rating) => {
+  var activeRnR;
+  const rate = (routeAndRate) => {
     isRating = true;
-    activeRating = rating;
+    activeRnR = routeAndRate;
   };
 
   const stopRating = () => (isRating = false);
@@ -40,9 +40,9 @@
         <li class="steps-segment">
           <span href="#" class="steps-marker" />
           <div class="steps-content pb-5">
-            <p class="is-size-4">{rnr.route[0]}</p>
+            <p class="is-size-4">{rnr.from[0]}</p>
             <p class="is-size-7 has-text-weight-light">
-              {prettyDateTime(rnr.route[1])}
+              {prettyDateTime(rnr.from[1])}
             </p>
             {#if rnr.rating}
               <p class="is-size-7 has-text-weight-light">
@@ -50,7 +50,7 @@
               </p>
               <button
                 class="button pt-4 is-link is-inverted"
-                on:click={() => rate(rnr.rating)}
+                on:click={() => rate(rnr)}
               >
                 <span class="icon">
                   <i class="fas fa-star" />
@@ -66,7 +66,7 @@
 {/await}
 
 {#if isRating}
-  <Rating on:click={stopRating} />
+  <Rating from={activeRnR.from} to={activeRnR.to} on:click={stopRating} />
 {/if}
 
 <style>

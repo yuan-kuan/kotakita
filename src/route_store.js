@@ -1,4 +1,5 @@
 import { readable, writable } from 'svelte/store';
+import { createRatingForRoute, getSimpleRating } from './rating_store';
 
 let visitingPlaceId;
 export const visitingPlace = writable({});
@@ -80,55 +81,15 @@ export const getTodayRoutes = async () => {
   for (let i = 0; i < routes.length - 1; i++) {
     const from = routes[i];
     const to = routes[i + 1];
-    const ratingkey = getKeyForRating(from, to);
-    const rating = getRating(ratingkey);
+    const rating = getSimpleRating(from, to);
 
     routeAndRating.push({
-      route: from,
-      rating: { key: ratingkey, rating: rating },
+      from,
+      to,
+      rating,
     });
   }
-  routeAndRating.push({ route: routes.slice(-1)[0], rating: null });
+  routeAndRating.push({ from: routes.slice(-1)[0], to: null, rating: null });
 
   return routeAndRating;
-};
-
-const getKeyForRating = (from, to) => {
-  // eslint-disable-next-line no-unused-vars
-  const [fromPlace, _] = from;
-  const [toPlace, toTime] = to;
-
-  let key = 'ra_';
-  key += fromPlace;
-  key += '_';
-  key += toPlace;
-  key += '_';
-  key += toTime.toString();
-
-  return key;
-};
-
-export const createRatingForRoute = (from, to) => {
-  const key = getKeyForRating(from, to);
-  console.log('key :>> ', key);
-
-  try {
-    window.localStorage.setItem(key, JSON.stringify([]));
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const getRating = (ratingKey) =>
-  JSON.parse(window.localStorage.getItem(ratingKey) ?? '[]');
-
-export const rateTheRoute = (ratingKey, value) => {
-  let rating = getRating(ratingKey);
-  rating.push(value);
-
-  try {
-    window.localStorage.setItem(ratingKey, JSON.stringify(rating));
-  } catch (error) {
-    console.error(error);
-  }
 };
