@@ -74,7 +74,7 @@
     </div>
 
     <ul>
-      {#each $allQuestions as q, i}
+      {#each Object.values($allQuestions) as q, i}
         <li class="block">
           <span class="mr-1">{i + 1}</span>
           <span
