@@ -1,6 +1,11 @@
 <script>
   import { onMount } from 'svelte';
-  import { currentRating, rate, startRating } from './rating_store';
+  import {
+    currentRating,
+    rate,
+    startRating,
+    visitPrevious,
+  } from './rating_store';
 
   export let from;
   export let to;
@@ -12,24 +17,29 @@
   $: rateCompleted = $currentRating.rateCompleted;
 
   //let QuestionSection;
-  let questionKey;
-  let questionType;
-  let questionBody;
-
-  $: {
-    questionKey = $currentRating.questionKey;
-    questionType = $currentRating.questionType;
-    questionBody = $currentRating.questionBody;
-  }
-
+  $: questionKey = $currentRating.questionKey;
+  $: questionType = $currentRating.questionType;
+  $: questionBody = $currentRating.questionBody;
   let answer;
   let comment;
+
+  currentRating.subscribe((value) => {
+    answer = value.value ? parseInt(value.value) : -1;
+    comment = value.comment;
+
+    console.log('answer :>> ', answer);
+  });
+
   const tickScale = (value) => {
     answer = value;
   };
 
   const submit = () => {
     rate(questionKey, answer, comment);
+  };
+
+  const back = () => {
+    visitPrevious();
   };
 
   let showCommentInput = false;
@@ -87,7 +97,7 @@
         <div class="pt-2 buttons has-addons is-centered are-small ">
           {#each [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as n}
             <button
-              class="button is-primary is-outlined"
+              class="button is-primary {answer == n ? '' : 'is-outlined'}"
               on:click={() => tickScale(n)}>{n}</button
             >
           {/each}
@@ -114,7 +124,7 @@
       {/if}
 
       <div class="block pt-6 is-flex is-justify-content-space-between">
-        <button class="button is-small is-longer">Back</button>
+        <button class="button is-small is-longer" on:click={back}>Back</button>
         <button class="button is-small is-longer is-link" on:click={submit}
           >Rate</button
         >
