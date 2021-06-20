@@ -47,7 +47,7 @@ const presentCurrentRating = () => {
       questionKey: question.key,
       questionType: question.type,
       questionBody: question.body,
-      value: rating ? rating[0] : undefined,
+      value: rating ? parseInt(rating[0]) : -1,
       comment: rating ? rating[1] : undefined,
       currentIndex: currentRatingQuestionIndex,
       totalQuestion: questionKeys.length,

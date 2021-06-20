@@ -22,14 +22,18 @@
   $: questionBody = $currentRating.questionBody;
   $: currentIndex = $currentRating.currentIndex ?? 0;
   $: totalQuestion = $currentRating.totalQuestion ?? 0;
+
   let answer;
   let comment;
 
-  currentRating.subscribe((value) => {
-    answer = value.value ? parseInt(value.value) : -1;
-    comment = value.comment;
+  $: isUpdatingRate =
+    answer != $currentRating.value ||
+    comment != $currentRating.comment ||
+    answer == -1;
 
-    console.log('answer :>> ', answer);
+  currentRating.subscribe((rating) => {
+    answer = rating.value;
+    comment = rating.comment;
   });
 
   const tickScale = (value) => {
@@ -40,6 +44,7 @@
     rate(questionKey, answer, comment);
   };
 
+  $: isShowingBack = currentIndex > 0;
   const back = () => {
     visitPrevious();
   };
@@ -128,14 +133,25 @@
       {/if}
 
       <div class="block pt-6 is-flex is-justify-content-space-between">
-        <button class="button is-small is-longer" on:click={back}>Back</button>
-        <button class="button is-small is-longer is-link" on:click={submit}
-          >Rate</button
+        <button
+          class="button is-small is-longer"
+          class:is-invisible={!isShowingBack}
+          on:click={back}>Back</button
         >
+        {#if rateCompleted}
+          <button class="button is-small is-longer is-link" on:click
+            >Close</button
+          >
+        {:else}
+          <button
+            class="button is-small is-longer {isUpdatingRate ? 'is-link' : ''}"
+            on:click={submit}>{isUpdatingRate ? 'Rate' : 'Next'}</button
+          >
+        {/if}
       </div>
 
       <div class="block is-flex is-flex-direction-row-reverse">
-        <a class="is-size-7">Continuer later</a>
+        <a class="is-size-7" on:click>Continuer later</a>
       </div>
     </div>
   </div>
