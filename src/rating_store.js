@@ -35,6 +35,8 @@ const presentCurrentRating = () => {
   if (currentRatingQuestionIndex >= questionKeys.length) {
     settingCurrentRating({
       rateCompleted: true,
+      currentIndex: currentRatingQuestionIndex,
+      totalQuestion: questionKeys.length,
     });
   } else {
     const question = questions[questionKeys[currentRatingQuestionIndex]];
@@ -47,6 +49,8 @@ const presentCurrentRating = () => {
       questionBody: question.body,
       value: rating ? rating[0] : undefined,
       comment: rating ? rating[1] : undefined,
+      currentIndex: currentRatingQuestionIndex,
+      totalQuestion: questionKeys.length,
     });
   }
 };

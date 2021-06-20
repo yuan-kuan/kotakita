@@ -20,6 +20,8 @@
   $: questionKey = $currentRating.questionKey;
   $: questionType = $currentRating.questionType;
   $: questionBody = $currentRating.questionBody;
+  $: currentIndex = $currentRating.currentIndex ?? 0;
+  $: totalQuestion = $currentRating.totalQuestion ?? 0;
   let answer;
   let comment;
 
@@ -74,11 +76,13 @@
         </ul>
 
         <div class="is-flex">
-          <progress class="progress is-primary is-small" value="15" max="100"
-            >15%</progress
-          >
+          <progress
+            class="progress is-primary is-small"
+            value={currentIndex}
+            max={totalQuestion - 1}
+          />
           <span class="is-flex-shrink-0 has-text-grey is-size-7">
-            1 of 10
+            {currentIndex + 1} of {totalQuestion}
           </span>
         </div>
 
