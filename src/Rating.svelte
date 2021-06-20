@@ -1,70 +1,25 @@
 <script>
   import { onMount } from 'svelte';
-  import { allQuestions, prepareQuestion } from './question_store';
   import { currentRating, rate, startRating } from './rating_store';
 
   export let from;
   export let to;
 
-  onMount(async () => {
-    await prepareQuestion();
+  onMount(() => {
     startRating(from, to);
   });
 
-  let preparing = true;
-  let rateCompleted = false;
-
-  let index = 0;
+  $: rateCompleted = $currentRating.rateCompleted;
 
   //let QuestionSection;
   let questionKey;
   let questionType;
   let questionBody;
 
-  const findNextUnansweredQuestionKey = () => {
-    const questionKeys = Object.keys($allQuestions).sort();
-    const latestRatedQuestionKey =
-      Object.keys($currentRating).sort().pop() ?? questionKeys[0];
-
-    if (latestRatedQuestionKey) {
-      const index = questionKeys.indexOf(latestRatedQuestionKey);
-      if (index == questionKeys.length - 1) {
-        rateCompleted = true;
-      } else {
-        rateCompleted = false;
-        const question = $allQuestions[questionKeys[index]];
-
-        console.log('question :>> ', question);
-        questionKey = question?.key;
-        questionType = question?.type;
-        questionBody = question?.body;
-      }
-    }
-  };
-
   $: {
-    if ($allQuestions == undefined || $currentRating == undefined) {
-      // Not ready yet;
-      preparing = false;
-    } else {
-      const questionKeys = Object.keys($allQuestions).sort();
-      const latestRatedQuestionKey =
-        Object.keys($currentRating).sort().pop() ?? questionKeys[0];
-
-      if (latestRatedQuestionKey) {
-        const index = questionKeys.indexOf(latestRatedQuestionKey) + 1;
-        if (index >= questionKeys.length - 1) {
-          rateCompleted = true;
-        } else {
-          rateCompleted = false;
-          const question = $allQuestions[questionKeys[index]];
-
-          questionKey = question?.key;
-          questionType = question?.type;
-          questionBody = question?.body;
-        }
-      }
-    }
+    questionKey = $currentRating.questionKey;
+    questionType = $currentRating.questionType;
+    questionBody = $currentRating.questionBody;
   }
 
   let answer;

@@ -3,17 +3,20 @@ import { readable } from 'svelte/store';
 // const questionVersionKey = 'qv';
 
 let settingAllQuestion;
-export const allQuestions = readable([], (set) => (settingAllQuestion = set));
+export const allQuestions = readable([], (set) => {
+  settingAllQuestion = set;
+  prepareQuestion();
+});
 
 export const prepareQuestion = async () => {
   try {
     let respond = await fetch('/all-questions');
     const questions = await respond.json();
-    console.log('questions :>> ', questions);
     const questionObject = {};
     questions.forEach((q) => {
       questionObject[q.key] = q;
     });
+    console.log('questionObject :>> ', questionObject);
     settingAllQuestion(questionObject);
   } catch (error) {
     console.error(error);
