@@ -2,6 +2,8 @@
   import { onMount } from 'svelte';
   import { Link } from 'svelte-navigator';
   import { isAdmin } from './user_store';
+  import { allPlaces } from './place_store';
+  import * as place_store from './place_store';
 
   const toParamCase = (str) => {
     if (!str) return '';
@@ -21,28 +23,12 @@
   const addNewPlace = async () => {
     isShowingAddPlace = false;
 
-    if (name == 'p') return prefill();
+    if (name == 'p') return place_store.prefill();
 
-    try {
-      let respond = await fetch('/place', {
-        method: 'POST',
-        // credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, slug }),
-      });
+    await place_store.addNewPlace(name, slug);
 
-      if (respond.ok) {
-        slug = '';
-        name = '';
-        getAllPlaces();
-      } else {
-        console.error(respond);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    slug = '';
+    name = '';
   };
 
   let isShowingEditPlace = false;
@@ -58,26 +44,14 @@
   };
 
   const changeOrder = async () => {
-    if (order < 1 || order > places.length) {
+    if (order < 1 || order > $allPlaces.length) {
       console.error(`order ${order} is out of range`);
       isShowingEditPlace = false;
       return;
     }
 
-    try {
-      await fetch('/order/' + editingPlaceId, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: order,
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      getAllPlaces();
-      isShowingEditPlace = false;
-    }
+    await place_store.changeOrder(editingPlaceId, order);
+    isShowingEditPlace = false;
   };
 
   const changeSlug = async () => {
@@ -88,78 +62,13 @@
       return;
     }
 
-    try {
-      await fetch('/url/' + editingPlaceId, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(slug),
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      getAllPlaces();
-      isShowingEditPlace = false;
-    }
+    await place_store.changeSlug(editingPlaceId, slug);
+    isShowingEditPlace = false;
   };
 
   const deletePlace = async () => {
     isShowingEditPlace = false;
-
-    try {
-      let respond = await fetch('/place/' + editingPlaceId, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (respond.ok) {
-        console.log('respond :>> ', respond);
-        getAllPlaces();
-      } else {
-        console.error(respond);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  let places = [];
-  const getAllPlaces = async () => {
-    try {
-      let respond = await fetch('/all-places');
-
-      if (respond.ok) {
-        console.log('respond :>> ', respond);
-        places = await respond.json();
-        console.log('data :>> ', places);
-      } else {
-        console.error(respond);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  onMount(() => getAllPlaces());
-
-  const prefill = async () => {
-    try {
-      let respond = await fetch('/prefill', {
-        method: 'POST',
-      });
-
-      if (respond.ok) {
-        console.log('respond :>> ', respond);
-        getAllPlaces();
-      } else {
-        console.error(respond);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    place_store.deletePlace(editingPlaceId);
   };
 </script>
 
@@ -176,7 +85,7 @@
 
 <div class="p-4">
   <ul>
-    {#each places as place}
+    {#each $allPlaces as place}
       <li>
         <Link to={`${place.key}`}>
           <div
