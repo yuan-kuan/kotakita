@@ -1,5 +1,38 @@
 import { readable } from 'svelte/store';
 import { allQuestions } from './question_store';
+import { userProfile } from './user_store';
+
+let profile;
+userProfile.subscribe((p) => {
+  profile = p;
+});
+
+const rateRemote = async () => {
+  const [, to, from, time] = activeRatingKey.split('_');
+  const payload = {
+    to,
+    from,
+    time,
+    userProfile: profile,
+    rating: activeRating,
+  };
+
+  try {
+    let respond = await fetch('/rating', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!respond.ok) {
+      console.error(respond);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 let questions;
 let questionKeys;
@@ -74,7 +107,7 @@ export const startRating = async (from, to) => {
   determineNextRating();
 };
 
-export const rate = (questionId, value, comment) => {
+export const rate = async (questionId, value, comment) => {
   let theRate = activeRating[questionId];
   if (theRate == undefined || theRate[0] != value || theRate[1] != comment) {
     activeRating[questionId] = [value, comment];
@@ -83,6 +116,9 @@ export const rate = (questionId, value, comment) => {
         activeRatingKey,
         JSON.stringify(activeRating)
       );
+
+      await rateRemote();
+
       determineNextRating();
     } catch (error) {
       console.error(error);

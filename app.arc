@@ -14,6 +14,8 @@ post /prefill
 get /all-questions
 post /question
 put /question/:id
+get /rating
+put /rating
 
 @shared
 src src/shared # this is the default

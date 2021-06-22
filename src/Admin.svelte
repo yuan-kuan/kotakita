@@ -57,12 +57,20 @@
   const closeQuestion = () => {
     isShowingEditQuestion = false;
   };
+
+  const report = async () => {
+    try {
+      await fetch('/rating');
+    } catch (error) {
+      console.error(error);
+    }
+  };
 </script>
 
 {#if $isAdmin || true}
   <section class="section has-background-warning ">
     <p class="title has-text-white">Admin Area</p>
-    <p class="subtitle has-text-white">Rating Questions</p>
+    <p class="subtitle has-text-white">Questions</p>
   </section>
 
   <div class="box">
@@ -90,6 +98,12 @@
       {/each}
     </ul>
   </div>
+
+  <section class="section has-background-warning ">
+    <p class="subtitle has-text-white">Rating</p>
+  </section>
+
+  <button class="button" on:click={report}>Rating report</button>
 
   <div class="modal" class:is-active={isShowingEditQuestion}>
     <div class="modal-background" on:click={closeQuestion} />
