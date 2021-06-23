@@ -65,18 +65,18 @@
       {#if rateCompleted}
         <p>Thank you for the rating!</p>
       {:else}
-        <p class="has-text-grey">You are rating:</p>
+        <p class="mb-2 has-text-grey is-size-7">You are rating:</p>
         <ul class="steps is-vertical is-small is-short has-text-grey">
           <li class="steps-segment is-active ">
             <span href="#" class="steps-marker is-light" />
             <div class="steps-content">
-              <p class="is-size-5">{keyToName(from[0])}</p>
+              <p class="is-size-6">{keyToName(from[0])}</p>
             </div>
           </li>
           <li class="steps-segment">
             <span href="#" class="steps-marker is-light" />
             <div class="steps-content">
-              <p class="is-size-5">{keyToName(to[0])}</p>
+              <p class="is-size-6">{keyToName(to[0])}</p>
             </div>
           </li>
         </ul>
@@ -160,8 +160,13 @@
 
 <style>
   /* Direct hack onto steps content */
+  .steps.is-vertical.is-short .steps-segment {
+    min-height: 0em;
+  }
+
+  /* Direct hack onto steps content */
   .steps.is-small.is-vertical .steps-content {
-    margin-top: -1.3rem;
+    margin-top: -1.1rem;
   }
 
   /* Add a grey bottom line after steps */
