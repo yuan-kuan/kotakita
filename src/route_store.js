@@ -1,5 +1,6 @@
 import { readable, writable } from 'svelte/store';
-import { createRatingForRoute, getSimpleRating } from './rating_store';
+import { preparePlaceMap } from './place_store';
+import { getSimpleRating } from './rating_store';
 
 let visitingPlaceId;
 export const visitingPlace = writable({});
@@ -70,6 +71,8 @@ export const checkIn = () => {
 };
 
 export const getTodayRoutes = async () => {
+  await preparePlaceMap();
+
   const routeAndRating = [];
   const routes = getCurrentRoute();
   for (let i = 0; i < routes.length - 1; i++) {

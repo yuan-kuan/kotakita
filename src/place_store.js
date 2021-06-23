@@ -22,6 +22,14 @@ export const preparePlaces = async () => {
   }
 };
 
+export const preparePlaceMap = async () => {
+  await new Promise((resolve) => {
+    allPlaces.subscribe((v) => {
+      if (v.length > 0) resolve();
+    });
+  });
+};
+
 export const deletePlace = async (editingPlaceId) => {
   try {
     let respond = await fetch('/place/' + editingPlaceId, {
@@ -108,4 +116,8 @@ export const prefill = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const keyToName = (key) => {
+  return placeMap[key].name;
 };

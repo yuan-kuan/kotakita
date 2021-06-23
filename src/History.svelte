@@ -1,4 +1,6 @@
 <script>
+  import { keyToName } from './place_store';
+
   import Rating from './Rating.svelte';
   import { getTodayRoutes } from './route_store';
 
@@ -40,7 +42,7 @@
         <li class="steps-segment">
           <span href="#" class="steps-marker" />
           <div class="steps-content pb-5">
-            <p class="is-size-4">{rnr.from[0]}</p>
+            <p class="is-size-4">{keyToName(rnr.from[0])}</p>
             <p class="is-size-7 has-text-weight-light">
               {prettyDateTime(rnr.from[1])}
             </p>
