@@ -6,6 +6,8 @@ let visitingPlaceId;
 export const visitingPlace = writable({});
 
 export const visitPlace = async (placeId) => {
+  await preparePlaceMap();
+
   try {
     let respond = await fetch('/place/' + placeId);
     if (respond.ok) {
@@ -47,12 +49,25 @@ export const routes = readable([], (set) => {
   resetRoute(getCurrentRoute());
 });
 
-export const checkedIn = writable(false);
+export const checkedIn = writable('new-visit');
 const determineCheckedInStatus = () => {
   let routes = getCurrentRoute();
-  if (routes.length > 0)
-    checkedIn.set(routes.slice(-1)[0][0] == visitingPlaceId);
-  else checkedIn.set(false);
+  if (routes.length > 0) {
+    const lastVisitedPlaceId = routes.slice(-1)[0][0];
+
+    if (lastVisitedPlaceId == visitingPlaceId) {
+      if (routes.length == 1) {
+        checkedIn.set('checked-in');
+      } else {
+        const from = routes.slice(-2)[0];
+        const to = routes.slice(-2)[1];
+
+        checkedIn.set({ from, to });
+      }
+    } else {
+      checkedIn.set('new-visit');
+    }
+  } else checkedIn.set('new-visit');
 };
 
 export const checkIn = () => {
