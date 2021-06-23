@@ -6,6 +6,7 @@
     startRating,
     visitPrevious,
   } from './rating_store';
+  import { keyToName } from './place_store';
 
   export let from;
   export let to;
@@ -69,13 +70,13 @@
           <li class="steps-segment is-active ">
             <span href="#" class="steps-marker is-light" />
             <div class="steps-content">
-              <p class="is-size-5">{from}</p>
+              <p class="is-size-5">{keyToName(from[0])}</p>
             </div>
           </li>
           <li class="steps-segment">
             <span href="#" class="steps-marker is-light" />
             <div class="steps-content">
-              <p class="is-size-5">{to}</p>
+              <p class="is-size-5">{keyToName(to[0])}</p>
             </div>
           </li>
         </ul>
