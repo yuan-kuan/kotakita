@@ -29,14 +29,17 @@
   let answer;
   let comment;
 
+  $: isUnanswered = answer == -1;
+
   $: isUpdatingRate =
-    answer != $currentRating.value ||
-    comment != $currentRating.comment ||
-    answer == -1;
+    answer != $currentRating.value || comment != $currentRating.comment;
+
+  let showCommentInput = false;
 
   currentRating.subscribe((rating) => {
     answer = rating.value;
     comment = rating.comment;
+    showCommentInput = comment != undefined;
   });
 
   const tickScale = (value) => {
@@ -51,8 +54,6 @@
   const back = () => {
     visitPrevious();
   };
-
-  let showCommentInput = false;
 </script>
 
 <div class="modal is-active">
@@ -118,23 +119,25 @@
         </div>
       {/if}
 
-      {#if showCommentInput}
-        <p class="is-size-7 has-text-grey">Comments (Options)</p>
-        <div class="control">
-          <textarea class="textarea is-small" bind:value={comment} />
-        </div>
-      {:else}
-        <button
-          class="button is-small"
-          on:click={() => {
-            showCommentInput = true;
-          }}
-        >
-          <span class="icon is-small">
-            <i class="fas fa-plus" />
-          </span>
-          <span> Add comments </span>
-        </button>
+      {#if !rateCompleted}
+        {#if showCommentInput}
+          <p class="is-size-7 has-text-grey">Comments (Options)</p>
+          <div class="control">
+            <textarea class="textarea is-small" bind:value={comment} />
+          </div>
+        {:else}
+          <button
+            class="button is-small"
+            on:click={() => {
+              showCommentInput = true;
+            }}
+          >
+            <span class="icon is-small">
+              <i class="fas fa-plus" />
+            </span>
+            <span> Add comments </span>
+          </button>
+        {/if}
       {/if}
 
       <div class="block pt-6 is-flex is-justify-content-space-between">
@@ -150,14 +153,17 @@
         {:else}
           <button
             class="button is-small is-longer {isUpdatingRate ? 'is-link' : ''}"
+            disabled={isUnanswered}
             on:click={submit}>{isUpdatingRate ? 'Rate' : 'Next'}</button
           >
         {/if}
       </div>
 
-      <div class="block is-flex is-flex-direction-row-reverse">
-        <a class="is-size-7" on:click>Continuer later</a>
-      </div>
+      {#if !rateCompleted}
+        <div class="block is-flex is-flex-direction-row-reverse">
+          <a class="is-size-7" on:click>Continuer later</a>
+        </div>
+      {/if}
     </div>
   </div>
 </div>
