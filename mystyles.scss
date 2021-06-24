@@ -20,6 +20,7 @@ $steps-divider-size: 1px;
 $section-padding: 1rem 1rem;
 
 $modal-card-head-background-color: $primary;
+$modal-background-background-color: #777777e5;
 
 @import './node_modules/bulma-o-steps/bulma-steps.sass';
 @import './node_modules/bulma/bulma.sass';
