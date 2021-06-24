@@ -108,15 +108,15 @@ export const getTodayRoutes = async () => {
   for (let i = 0; i < routes.length - 1; i++) {
     const from = routes[i];
     const to = routes[i + 1];
-    const rating = getSimpleRating(from, to);
+    const completed = await checkRatingCompletion(from, to);
 
     routeAndRating.push({
       from,
       to,
-      rating,
+      completed,
     });
   }
-  routeAndRating.push({ from: routes.slice(-1)[0], to: null, rating: null });
+  routeAndRating.push({ from: routes.slice(-1)[0], to: null, completed: null });
 
   return routeAndRating;
 };

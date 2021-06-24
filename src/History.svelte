@@ -15,7 +15,6 @@
       minute: 'numeric',
     };
 
-    console.log(d.toLocaleDateString('en-US', options)); // Saturday, September 17, 2016
     return d.toLocaleDateString('en-US', options);
   };
 
@@ -46,19 +45,28 @@
             <p class="is-size-7 has-text-weight-light">
               {prettyDateTime(rnr.from[1])}
             </p>
-            {#if rnr.rating}
-              <p class="is-size-7 has-text-weight-light">
-                {rnr.rating.rating}
-              </p>
-              <button
-                class="button pt-4 is-link is-inverted"
-                on:click={() => rate(rnr)}
-              >
-                <span class="icon">
-                  <i class="fas fa-star" />
-                </span>
-                <span>View or edit rating</span>
-              </button>
+            {#if rnr.to != null}
+              {#if rnr.completed}
+                <button
+                  class="button pt-4 is-link is-inverted"
+                  on:click={() => rate(rnr)}
+                >
+                  <span class="icon">
+                    <i class="fas fa-star" />
+                  </span>
+                  <span>View rating</span>
+                </button>
+              {:else}
+                <button
+                  class="button pt-4 is-danger is-inverted"
+                  on:click={() => rate(rnr)}
+                >
+                  <span class="icon">
+                    <i class="fas fa-star" />
+                  </span>
+                  <span>Rate the route</span>
+                </button>
+              {/if}
             {/if}
           </div>
         </li>
