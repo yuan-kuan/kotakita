@@ -1,6 +1,6 @@
 import { readable, writable } from 'svelte/store';
 import { preparePlaceMap } from './place_store';
-import { getSimpleRating } from './rating_store';
+import { getSimpleRating, checkRatingCompletion } from './rating_store';
 
 let visitingPlaceId;
 export const visitingPlace = writable({});
@@ -50,7 +50,7 @@ export const routes = readable([], (set) => {
 });
 
 export const checkedIn = writable('new-visit');
-const determineCheckedInStatus = () => {
+export const determineCheckedInStatus = async () => {
   let routes = getCurrentRoute();
   if (routes.length > 0) {
     const lastVisitedPlaceId = routes.slice(-1)[0][0];
@@ -62,10 +62,25 @@ const determineCheckedInStatus = () => {
         const from = routes.slice(-2)[0];
         const to = routes.slice(-2)[1];
 
-        checkedIn.set({ from, to });
+        const completed = await checkRatingCompletion(from, to);
+
+        checkedIn.set({ from, to, completed });
       }
     } else {
-      checkedIn.set('new-visit');
+      const visited = routes.find((r) => r[0] == visitingPlaceId);
+      if (visited != undefined) {
+        const d = new Date(visited[1]);
+        var options = {
+          hour: 'numeric',
+          minute: 'numeric',
+        };
+        checkedIn.set({
+          visited: true,
+          time: d.toLocaleTimeString('en-US', options),
+        });
+      } else {
+        checkedIn.set('new-visit');
+      }
     }
   } else checkedIn.set('new-visit');
 };

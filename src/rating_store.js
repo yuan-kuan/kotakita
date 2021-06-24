@@ -89,15 +89,25 @@ const presentCurrentRating = () => {
 };
 
 const determineNextRating = () => {
-  const latestRatedQuestionKey = Object.keys(activeRating).sort().pop();
+  currentRatingQuestionIndex = findRatingQuestionIndex(activeRating);
+  presentCurrentRating();
+};
 
-  currentRatingQuestionIndex = 0;
+const findRatingQuestionIndex = (rating) => {
+  const latestRatedQuestionKey = Object.keys(rating).sort().pop();
+
+  let index = 0;
   if (latestRatedQuestionKey != undefined) {
-    currentRatingQuestionIndex =
-      questionKeys.indexOf(latestRatedQuestionKey) + 1;
+    index = questionKeys.indexOf(latestRatedQuestionKey) + 1;
   }
 
-  presentCurrentRating();
+  return index;
+};
+
+export const checkRatingCompletion = async (from, to) => {
+  const rating = await getSimpleRating(from, to);
+  let questionIndex = findRatingQuestionIndex(rating);
+  return questionIndex >= questionKeys.length;
 };
 
 export const startRating = async (from, to) => {

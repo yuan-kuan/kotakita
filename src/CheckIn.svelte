@@ -1,6 +1,6 @@
 <script>
   import Rating from './Rating.svelte';
-  import { checkedIn, checkIn } from './route_store';
+  import { checkedIn, checkIn, determineCheckedInStatus } from './route_store';
   import { keyToName } from './place_store';
 
   var isRating = false;
@@ -15,13 +15,19 @@
   };
   const stopRating = () => {
     isRating = false;
+
+    determineCheckedInStatus();
   };
 
   var barClass = '';
   $: {
     if ($checkedIn == 'new-visit') {
       barClass = 'new-visit-bar';
+    } else if ($checkedIn.visited) {
+      barClass = 'new-visit-bar';
     } else if ($checkedIn == 'checked-in') {
+      barClass = 'checked-in-bar';
+    } else if ($checkedIn.completed) {
       barClass = 'checked-in-bar';
     } else {
       barClass = 'rate-bar';
@@ -46,6 +52,26 @@
       <i class="fas fa-2x fa-sign-in-alt" />
     </span>
     <span> Check-in</span>
+  </div>
+{:else if $checkedIn.visited}
+  <div
+    class=" is-flex is-flex-direction-column is-align-items-center is-size-7 has-text-white has-background-link round-button"
+    on:click={checkIn}
+  >
+    <span class="mt-2 icon is-medium">
+      <i class="fas fa-2x fa-sign-in-alt" />
+    </span>
+    <span> Revisit</span>
+  </div>
+{:else if $checkedIn.completed}
+  <div
+    class=" is-flex is-flex-direction-column is-align-items-center is-size-7 has-text-white has-background-grey-lighter round-flat-button"
+    on:click={rate}
+  >
+    <span class="mt-2 icon is-medium">
+      <i class="fas fa-2x fa-check" />
+    </span>
+    <span> Rated </span>
   </div>
 {:else}
   <div
@@ -75,6 +101,10 @@
       Visit more checkpoints to rate the routes!
     {:else if $checkedIn == 'new-visit'}
       New checkpoint, check in now!
+    {:else if $checkedIn.visited}
+      You have visited here around {$checkedIn.time}.
+    {:else if $checkedIn.completed}
+      Route from {keyToName(from[0])} to here is rated!
     {:else}
       You came from {keyToName(from[0])}, how was the route?
     {/if}
