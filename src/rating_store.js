@@ -75,9 +75,13 @@ const presentCurrentRating = () => {
     const question = questions[questionKeys[currentRatingQuestionIndex]];
     const rating = activeRating[questionKeys[currentRatingQuestionIndex]];
 
+    console.log('question :>> ', question);
+
     settingCurrentRating({
       rateCompleted: false,
       questionKey: question.key,
+      questionSectionIndex: question.index,
+      questionSectionTitle: question.title,
       questionType: question.type,
       questionBody: question.body,
       value: rating ? parseInt(rating[0]) : -1,

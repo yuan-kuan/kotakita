@@ -19,6 +19,8 @@
 
   //let QuestionSection;
   $: questionKey = $currentRating.questionKey;
+  $: questionSectionTitle = $currentRating.questionSectionTitle;
+  $: questionSectionIndex = $currentRating.questionSectionIndex;
   $: questionType = $currentRating.questionType;
   $: questionBody = $currentRating.questionBody;
   $: currentIndex = $currentRating.currentIndex ?? 0;
@@ -57,7 +59,9 @@
   <div class="modal-background" on:click />
   <div class="modal-card">
     <header class="modal-card-head">
-      <p class="modal-card-title">Rate and Review</p>
+      <p class="modal-card-title has-text-white has-text-weight-bold">
+        Rate and Review
+      </p>
       <button class="delete" aria-label="close" on:click />
     </header>
 
@@ -92,10 +96,10 @@
           </span>
         </div>
 
-        <p class="is-size-7 has-text-grey">Section 1</p>
-        <p class="pt-2 is-size-4">Environment</p>
-        <p class="is-size-7 has-text-grey">
-          {questionType}
+        <p class="is-size-7 has-text-grey">Section {questionSectionIndex}</p>
+        <p class="pt-2 is-size-4">{questionSectionTitle}</p>
+        <p class="is-size-7 has-text-grey" style="margin-top: -0.6em">
+          Rate the following on the scale of 1 to 10.
         </p>
         <!-- Rate the following on the scale of 1-10 -->
 

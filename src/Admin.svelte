@@ -13,6 +13,8 @@
   let isShowingEditQuestion = false;
 
   let questionId;
+  let questionSectionIndex;
+  let questionSectionTitle;
   let questionBody;
   let questionType;
   let questionAllowOptionalComment;
@@ -30,6 +32,8 @@
   const startEditingQuestion = (question) => {
     isShowingEditQuestion = true;
     questionId = question.key;
+    questionSectionIndex = question.index;
+    questionSectionTitle = question.title;
     questionBody = question.body;
     questionType = question.type;
     questionAllowOptionalComment = question.aoc;
@@ -38,6 +42,8 @@
 
   const save = () => {
     const toSave = {
+      index: questionSectionIndex,
+      title: questionSectionTitle,
       body: questionBody,
       type: questionType,
       aoc: questionAllowOptionalComment,
@@ -112,6 +118,30 @@
         <p class="modal-card-title">Edit Question</p>
       </header>
       <section class="modal-card-body">
+        <div class="field">
+          <!-- svelte-ignore a11y-label-has-associated-control -->
+          <label class="label">Section Index</label>
+          <div class="control">
+            <input
+              class="input"
+              type="number"
+              bind:value={questionSectionIndex}
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <!-- svelte-ignore a11y-label-has-associated-control -->
+          <label class="label">Section Title</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              bind:value={questionSectionTitle}
+            />
+          </div>
+        </div>
+
         <div class="field">
           <!-- svelte-ignore a11y-label-has-associated-control -->
           <label class="label">Question Body</label>
