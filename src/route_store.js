@@ -1,6 +1,6 @@
 import { readable, writable } from 'svelte/store';
 import { preparePlaceMap } from './place_store';
-import { getSimpleRating, checkRatingCompletion } from './rating_store';
+import { checkRatingCompletion } from './rating_store';
 
 let visitingPlaceId;
 export const visitingPlace = writable({});
@@ -9,6 +9,8 @@ export const visitPlace = async (placeId) => {
   await preparePlaceMap();
 
   try {
+    checkedIn.set('loading');
+    visitingPlace.set('');
     let respond = await fetch('/place/' + placeId);
     if (respond.ok) {
       let data = await respond.json();

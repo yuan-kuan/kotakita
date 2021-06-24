@@ -1,4 +1,5 @@
 <script>
+  import { fade } from 'svelte/transition';
   import Rating from './Rating.svelte';
   import { checkedIn, checkIn, determineCheckedInStatus } from './route_store';
   import { keyToName } from './place_store';
@@ -73,7 +74,7 @@
     </span>
     <span> Rated </span>
   </div>
-{:else}
+{:else if $checkedIn != 'loading'}
   <div
     class=" is-flex is-flex-direction-column is-align-items-center is-size-7 has-text-white has-background-danger round-button"
     on:click={rate}
@@ -85,33 +86,35 @@
   </div>
 {/if}
 
-<div
-  class="is-flex is-flex-direction-row-reverse {barClass}"
-  style="
+{#if $checkedIn != 'loading'}
+  <div
+    class="is-flex is-flex-direction-row-reverse {barClass}"
+    style="
   margin-top: -32px;
   padding-bottom: 20px;
   margin-bottom: -20px;
   border-radius: 6px;
   "
->
-  <span class="is-flex-shrink-0" style="width: 96px;" />
+  >
+    <span class="is-flex-shrink-0" style="width: 96px;" />
 
-  <div class="is-size-7 has-text-white has-text-right">
-    {#if $checkedIn == 'checked-in'}
-      Visit more checkpoints to rate the routes!
-    {:else if $checkedIn == 'new-visit'}
-      New checkpoint, check in now!
-    {:else if $checkedIn.visited}
-      You have visited here around {$checkedIn.time}.
-    {:else if $checkedIn.completed}
-      Route from {keyToName(from[0])} to here is rated!
-    {:else}
-      You came from {keyToName(from[0])}, how was the route?
-    {/if}
+    <div class="is-size-7 has-text-white has-text-right">
+      {#if $checkedIn == 'checked-in'}
+        Visit more checkpoints to rate the routes!
+      {:else if $checkedIn == 'new-visit'}
+        New checkpoint, check in now!
+      {:else if $checkedIn.visited}
+        You have visited here around {$checkedIn.time}.
+      {:else if $checkedIn.completed}
+        Route from {keyToName(from[0])} to here is rated!
+      {:else}
+        You came from {keyToName(from[0])}, how was the route?
+      {/if}
+    </div>
+
+    <div />
   </div>
-
-  <div />
-</div>
+{/if}
 
 {#if isRating}
   <Rating {from} {to} on:click={stopRating} />
