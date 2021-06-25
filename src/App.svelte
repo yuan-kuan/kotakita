@@ -1,11 +1,9 @@
 <script>
   // Build this with `npm run build-css`
   import '../mystyles.css';
-  // import 'bulma/css/bulma.css';
 
   import { Router, Route } from 'svelte-navigator';
   import Map from './Map.svelte';
-  import Walk from './Walk.svelte';
   import History from './History.svelte';
   import BottomBar from './BottomBar.svelte';
   import Admin from './Admin.svelte';
@@ -13,7 +11,7 @@
 
 <!-- Pad to show full content above bottom bar -->
 <div class="container" style="max-width: 640px; padding-bottom: 40px;">
-  <Router>
+  <Router primary={false}>
     <Route path="/" let:navigate>
       Redirecting...
       {navigate('walk')}
