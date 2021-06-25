@@ -30,12 +30,12 @@
     <span class="is-size-7 has-text-primary">Map</span>
   </div>
 
-  <div class="level-item  is-flex-direction-column">
-    <span class="icon is-medium has-text-grey-lighter">
+  <!-- <div class="level-item  is-flex-direction-column">
+    <span class="icon is-medium has-text-grey-lightest">
       <i class="fas fa-2x fa-qrcode" />
     </span>
-    <span class="is-size-7 has-text-grey-lighter">Scan QR</span>
-  </div>
+    <span class="is-size-7 has-text-grey-lightest">Scan QR</span>
+  </div> -->
 </nav>
 
 <style>

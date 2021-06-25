@@ -1,6 +1,8 @@
 <script>
   import { onMount } from 'svelte';
   import { Link } from 'svelte-navigator';
+  import { Loader } from '@googlemaps/js-api-loader';
+
   import { isAdmin } from './user_store';
   import { allPlaces } from './place_store';
   import * as place_store from './place_store';
@@ -70,6 +72,43 @@
     isShowingEditPlace = false;
     place_store.deletePlace(editingPlaceId);
   };
+
+  let mapDiv;
+  const loader = new Loader({
+    apiKey: 'AIzaSyCVOJFGHCb-6UaNvqQ7LvKMKxUbR_mIAP8',
+    version: 'weekly',
+    // libraries: ['places'],
+  });
+
+  const mapOptions = {
+    center: {
+      lat: 5.9846474,
+      lng: 116.077384,
+    },
+    zoom: 16.5,
+    mapId: 'bb6abb3bae6e3585',
+    disableDefaultUI: true,
+  };
+
+  onMount(async () => {
+    const google = await loader.load();
+    const map = new google.maps.Map(mapDiv, mapOptions);
+
+    // Create an info window to share between markers.
+    const infoWindow = new google.maps.InfoWindow();
+
+    const marker = new google.maps.Marker({
+      position: { lat: 5.98230833933885, lng: 116.07628337297034 },
+      map,
+      title: 'Gaya The Stree',
+    });
+
+    marker.addListener('click', () => {
+      infoWindow.close();
+      infoWindow.setContent(marker.getTitle());
+      infoWindow.open(marker.getMap(), marker);
+    });
+  });
 </script>
 
 <section class="section has-background-primary ">
@@ -83,6 +122,8 @@
   >
 {/if}
 
+<div class="block" style="height: 100vh;" bind:this={mapDiv} />
+<!-- 
 <div class="p-4">
   <ul>
     {#each $allPlaces as place}
@@ -120,7 +161,7 @@
     {/each}
   </ul>
   <br />
-</div>
+</div> -->
 
 <div class="modal" class:is-active={isShowingAddPlace}>
   <div class="modal-background" on:click={() => (isShowingAddPlace = false)} />
@@ -207,3 +248,9 @@
     on:click={() => (isShowingEditPlace = false)}
   />
 </div>
+
+<!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3968.082961531253!2d
+116.07469971527458
+!3d
+5.9833145308657265
+!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x323b698f86e4f1a7%3A0x7612284d8deb71d4!2sGaya%20Street%20Sunday%20Morning%20Market!5e0!3m2!1sen!2smy!4v1624608675132!5m2!1sen!2smy" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
