@@ -34,13 +34,22 @@
   let isShowingEditPlace = false;
   let editingPlaceId;
   let order;
+  let latlong;
 
   const startEditPlace = (editingPlace) => {
     editingPlaceId = editingPlace.key;
     order = editingPlace.order + 1;
     slug = editingPlace.key;
     name = editingPlace.name;
+    latlong = editingPlace.lat
+      ? `${editingPlace.lat}, ${editingPlace.long}`
+      : '';
     isShowingEditPlace = true;
+  };
+
+  const changeLatlong = async () => {
+    await place_store.changeLatlong(editingPlaceId, latlong);
+    isShowingEditPlace = false;
   };
 
   const changeOrder = async () => {
@@ -163,12 +172,17 @@
     <section class="modal-card-body">
       <div class="box field">
         <!-- svelte-ignore a11y-label-has-associated-control -->
+        <label class="label">Coordinate (lat, long)</label>
+        <input class="input" bind:value={latlong} />
+        <button class="button is-success" on:click={changeLatlong}
+          >Change Lat Long</button
+        >
+      </div>
+
+      <div class="box field">
+        <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label">Order</label>
         <input class="input" bind:value={order} />
-        <p class="help">
-          Use lowercase and '-' only. Keep it short and sweet. As short as
-          possible. e.g. 'gaya' for 'Gaya Street', 'park' for 'City Park'.
-        </p>
         <button class="button is-success" on:click={changeOrder}
           >Change Order</button
         >

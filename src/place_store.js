@@ -81,6 +81,26 @@ export const changeOrder = async (editingPlaceId, order) => {
   }
 };
 
+export const changeLatlong = async (editingPlaceId, latlong) => {
+  const n = {};
+  const [lat, long] = latlong.split(',').map((v) => parseFloat(v.trim()));
+  n['lat'] = lat;
+  n['long'] = long;
+  try {
+    await fetch('/place/' + editingPlaceId, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(n),
+    });
+  }catch (error) {
+    console.error(error);
+  } finally {
+    preparePlaces();
+  }
+};
+
 export const addNewPlace = async (name, slug) => {
   try {
     let respond = await fetch('/place', {

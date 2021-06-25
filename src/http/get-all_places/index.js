@@ -27,6 +27,8 @@ exports.handler = async function http(req) {
     leanPlaces.push({
       key: place.key,
       name: place.name,
+      lat: place.lat,
+      long: place.long,
       order: i,
     });
   }
