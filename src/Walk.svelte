@@ -8,6 +8,7 @@
   import CheckIn from './CheckIn.svelte';
 
   export let placeId;
+  export let navigate;
 
   $: {
     visitPlace(placeId);
@@ -20,6 +21,10 @@
   onDestroy(() => {
     visitingPlace.set({});
   });
+
+  const goBack = () => {
+    navigate(-1);
+  };
 
   let editing;
   $: showingEdit = editing;
@@ -131,6 +136,14 @@
     </span>
   </button>
 {/if}
+<button
+  class="button is-primary is-inverted is-outlined image-back is-large"
+  on:click={goBack}
+>
+  <span class="icon">
+    <i class="fa fa-arrow-left" />
+  </span>
+</button>
 <figure class="image is-1by1 has-background-info" style="z-index: -1;">
   {#if photoUrl}
     <img
@@ -225,6 +238,14 @@
 <style>
   .modal-content {
     width: auto;
+  }
+
+  .image-back {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    margin: 4px;
+    border-radius: 50%;
   }
 
   .image-edit {

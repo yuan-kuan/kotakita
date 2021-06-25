@@ -19,12 +19,7 @@
       {navigate('walk')}
     </Route>
     <Route path="walk/*">
-      <Route path="/">
-        <Map />
-      </Route>
-      <Route path=":id" let:params>
-        <Walk placeId={params.id} />
-      </Route>
+      <Map />
     </Route>
     <Route path="/history">
       <History />
