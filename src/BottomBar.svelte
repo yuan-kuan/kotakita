@@ -7,13 +7,6 @@
 
   $: isShowingMap = $mapMatch != undefined;
   $: isShowingHistory = $historyMatch != undefined;
-
-  $: console.log(
-    'isShowingMap ',
-    isShowingMap,
-    ' isShowingHistory ',
-    isShowingHistory
-  );
 </script>
 
 <nav

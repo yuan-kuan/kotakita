@@ -16,8 +16,8 @@
       Redirecting...
       {navigate('walk')}
     </Route>
-    <Route path="/walk/*">
-      <Map />
+    <Route path="/walk/*" let:navigate>
+      <Map {navigate} />
     </Route>
     <Route path="/history">
       <History />

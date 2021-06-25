@@ -1,13 +1,13 @@
 <script>
-  import { Router, Route } from 'svelte-navigator';
+  import { Router, Route, useMatch } from 'svelte-navigator';
   import { onMount } from 'svelte';
   import { Loader } from '@googlemaps/js-api-loader';
+
+  import { allPlaces } from './place_store';
   import Walk from './Walk.svelte';
 
-  import { useMatch } from 'svelte-navigator';
-  import AdminCheckpoints from './AdminCheckpoints.svelte';
-
   const relativeMatch = useMatch(':placeId');
+  export let navigate;
 
   $: isShowingMap = $relativeMatch?.params?.placeId == undefined;
 
@@ -28,39 +28,73 @@
     disableDefaultUI: true,
   };
 
+  let google;
+  let map;
+  let markers;
+  let infoWindow;
+  let panel;
+  let panelTitle;
+  let panelPlaceKey;
+
   onMount(async () => {
     console.log('on mount Map, calling Google');
-    // const google = await loader.load();
-    // const map = new google.maps.Map(mapDiv, mapOptions);
-    // // Create an info window to share between markers.
-    // const infoWindow = new google.maps.InfoWindow();
-    // const marker = new google.maps.Marker({
-    //   position: { lat: 5.98230833933885, lng: 116.07628337297034 },
-    //   map,
-    //   title: 'Gaya The Stree',
-    // });
-    // marker.addListener('click', () => {
-    //   infoWindow.close();
-    //   infoWindow.setContent(marker.getTitle());
-    //   infoWindow.open(marker.getMap(), marker);
-    // });
+
+    google = await loader.load();
+    map = new google.maps.Map(mapDiv, mapOptions);
+    // Create an info window to share between markers.
+    infoWindow = new google.maps.InfoWindow();
+
+    allPlaces.subscribe((places) => {
+      console.log('setting up markers');
+
+      for (const place of places) {
+        if (place.lat) {
+          const marker = new google.maps.Marker({
+            position: { lat: place.lat, lng: place.long },
+            map,
+            title: place.name,
+          });
+          marker.addListener('click', () => {
+            panelTitle = place.name;
+            panelPlaceKey = place.key;
+            infoWindow.close();
+            infoWindow.setContent(panel);
+            // infoWindow.setContent(
+            //   `<p class="is-size-4">${place.name}<p>` +
+            //     `<a href="walk/${place.key}"><button class="button">Go!</button></a>`
+            // );
+            infoWindow.open(marker.getMap(), marker);
+          });
+        } else {
+          console.warn('The ', place.slug, ' has no lat long');
+        }
+      }
+    });
   });
+
+  const panelNavigate = () => {
+    console.log('naviageting to ', panelPlaceKey);
+    console.log('navigate :>> ', navigate);
+    navigate(panelPlaceKey);
+  };
 </script>
 
-<!-- <div
-  class="block has-background-danger {isShowingMap ? '' : 'is-hidden'}"
-  style="height: 100vh;"
-  bind:this={mapDiv}
-  /> -->
+<div bind:this={panel}>
+  <span>{panelTitle}</span>
+  <button class="button" on:click={panelNavigate}>Go!</button>
+</div>
 
+<section
+  class="section has-background-primary {isShowingMap ? '' : 'is-hidden'}"
+>
+  <p class="title pt-2 has-text-white">Check-points</p>
+</section>
 <div
+  bind:this={mapDiv}
   class="block has-background-danger {isShowingMap ? '' : 'is-hidden'}"
   style="height: 100vh;"
 >
-  <section class="section has-background-primary ">
-    <p class="title pt-2 has-text-white">Check-points</p>
-  </section>
-  <AdminCheckpoints />
+  <!-- <AdminCheckpoints /> -->
 </div>
 
 <Router>
