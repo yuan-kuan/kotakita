@@ -16,7 +16,7 @@
       Redirecting...
       {navigate('walk')}
     </Route>
-    <Route path="walk/*">
+    <Route path="/walk/*">
       <Map />
     </Route>
     <Route path="/history">
@@ -25,7 +25,6 @@
     <Route path="/office">
       <Admin />
     </Route>
+    <BottomBar />
   </Router>
 </div>
-
-<BottomBar />
