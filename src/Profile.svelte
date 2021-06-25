@@ -94,16 +94,6 @@
           Forget Me
         </a>
       {/if}
-      <hr class="dropdown-divider" />
-      <!-- svelte-ignore a11y-invalid-attribute -->
-      <a
-        href="#"
-        class="dropdown-item"
-        on:click={tryAdminAccess}
-        on:click={closeDropdown}
-      >
-        Admin Access
-      </a>
     </div>
   </div>
 </div>
