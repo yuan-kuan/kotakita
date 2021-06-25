@@ -1,4 +1,5 @@
 <script>
+  import AdminCheckpoints from './AdminCheckpoints.svelte';
   import AdminQuestion from './AdminQuestion.svelte';
   import { isAdmin, tryAdminAccess } from './user_store';
 
@@ -24,7 +25,7 @@
   </div>
 
   {#if currentTab == 'cp'}
-    <div>list here</div>
+    <AdminCheckpoints />
   {:else}
     <AdminQuestion />
   {/if}
