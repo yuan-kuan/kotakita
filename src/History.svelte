@@ -70,6 +70,11 @@
             {/if}
           </div>
         </li>
+      {:else}
+        <p>
+          You have not check in any checkpoint yet, do visit the Map to see all
+          the available checkpoints!
+        </p>
       {/each}
     </ul>
   </div>

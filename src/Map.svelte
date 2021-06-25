@@ -58,7 +58,7 @@
   style="height: 100vh;"
 >
   <section class="section has-background-primary ">
-    <p class="title has-text-white">Check-points</p>
+    <p class="title pt-2 has-text-white">Check-points</p>
   </section>
   <AdminCheckpoints />
 </div>

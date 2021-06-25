@@ -118,7 +118,9 @@ export const getTodayRoutes = async () => {
       completed,
     });
   }
-  routeAndRating.push({ from: routes.slice(-1)[0], to: null, completed: null });
+  if (routes.length > 1) {
+    routeAndRating.push({ from: routes.slice(-1)[0], to: null, completed: null });
+  }
 
   return routeAndRating;
 };
