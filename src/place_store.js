@@ -94,14 +94,16 @@ export const changeLatlong = async (editingPlaceId, latlong) => {
       },
       body: JSON.stringify(n),
     });
-  }catch (error) {
+  } catch (error) {
     console.error(error);
   } finally {
     preparePlaces();
   }
 };
 
-export const addNewPlace = async (name, slug) => {
+export const addNewPlace = async (name, slug, latlong) => {
+  const [lat, long] = latlong.split(',').map((v) => parseFloat(v.trim()));
+
   try {
     let respond = await fetch('/place', {
       method: 'POST',
@@ -109,7 +111,7 @@ export const addNewPlace = async (name, slug) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, slug }),
+      body: JSON.stringify({ name, slug, lat, long }),
     });
 
     if (respond.ok) {

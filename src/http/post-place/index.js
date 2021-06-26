@@ -14,11 +14,15 @@ const addNewPlace = async (req) => {
     const table = 'place';
     const name = payload.name;
     const slug = payload.slug;
+    const lat = payload.lat;
+    const long = payload.long;
 
     await data.set({
       table,
       key: slug,
       name,
+      lat,
+      long,
       description: `Description needed for ${name}`,
     });
 

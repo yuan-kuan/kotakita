@@ -25,7 +25,7 @@
 
     if (name == 'p') return place_store.prefill();
 
-    await place_store.addNewPlace(name, slug);
+    await place_store.addNewPlace(name, slug, latlong);
 
     slug = '';
     name = '';
@@ -138,6 +138,11 @@
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label">Name</label>
         <input class="input" bind:value={name} />
+      </div>
+      <div class="field">
+        <!-- svelte-ignore a11y-label-has-associated-control -->
+        <label class="label">Coordinate (lat, long)</label>
+        <input class="input" bind:value={latlong} />
       </div>
       <div class="field">
         <!-- svelte-ignore a11y-label-has-associated-control -->
