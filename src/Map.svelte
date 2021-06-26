@@ -44,7 +44,7 @@
     infoWindow = new google.maps.InfoWindow();
 
     const markerIcon = {
-      url: '/_static/kk_mappin.png', // url
+      url: '/kk_mappin.png', // url
       scaledSize: new google.maps.Size(27, 48), // scaled size
       origin: new google.maps.Point(0, 0), // origin
       anchor: new google.maps.Point(13, 46), // anchor

@@ -98,7 +98,7 @@
             style="position:relative;"
           >
             <figure class="image is-32x32 is-rounded">
-              <img src="/_static/favicon.png" alt="" />
+              <img src="/favicon.png" alt="" />
             </figure>
             <span class="pl-2">
               {place.name}
