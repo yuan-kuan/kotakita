@@ -144,11 +144,7 @@
     <i class="fa fa-arrow-left" />
   </span>
 </button>
-<figure
-  transition:fly={{ x: 200, duration: 500 }}
-  class="image is-1by1 has-background-info"
-  style="z-index: -1;"
->
+<figure class="image is-1by1 has-background-info" style="z-index: -1;">
   {#if photoUrl}
     <img
       in:fade
