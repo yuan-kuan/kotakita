@@ -15,7 +15,6 @@
   const loader = new Loader({
     apiKey: 'AIzaSyCVOJFGHCb-6UaNvqQ7LvKMKxUbR_mIAP8',
     version: 'weekly',
-    // libraries: ['places'],
   });
 
   const mapOptions = {
@@ -53,7 +52,6 @@
     };
 
     allPlaces.subscribe((places) => {
-      console.log('setting up markers');
       for (const place of places) {
         if (place.lat) {
           const marker = new google.maps.Marker({
@@ -66,7 +64,6 @@
             startUsingPanel = true;
             panelTitle = place.name;
             panelPlaceKey = place.key;
-            infoWindow.close();
             infoWindow.setContent(panel);
             infoWindow.open(map, marker);
           });
@@ -78,8 +75,7 @@
   });
 
   const panelNavigate = () => {
-    // navigate(panelPlaceKey);
-    navigate('gaya-street');
+    navigate(panelPlaceKey);
   };
 </script>
 
