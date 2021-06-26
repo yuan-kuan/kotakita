@@ -1,5 +1,6 @@
 <script>
   import ProfileUpdater from './ProfileUpdater.svelte';
+  import { navigate } from 'svelte-navigator';
   import { userProfile, forgetUser } from './user_store';
 
   $: name = $userProfile.name ?? 'New User';
@@ -28,6 +29,10 @@
     isShowingInfoUpdate = false;
   };
 
+  const goToOffice = () => {
+    navigate('/office');
+  };
+
   let isAskingForget = false;
 </script>
 
@@ -53,7 +58,7 @@
     <div class="dropdown-content">
       <div class="dropdown-item">
         <!-- svelte-ignore a11y-label-has-associated-control -->
-        <label>Logged in as:</label>
+        <label on:dblclick={goToOffice}>Logged in as:</label>
         <strong>{name}</strong>
         <p class="is-size-7 is-italic">{otherInfo}</p>
       </div>
