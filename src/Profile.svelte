@@ -1,7 +1,7 @@
 <script>
   import ProfileUpdater from './ProfileUpdater.svelte';
   import { navigate } from 'svelte-navigator';
-  import { userProfile, forgetUser } from './user_store';
+  import { userProfile, forgetUser, touchProfile } from './user_store';
 
   $: name = $userProfile.name ?? 'New User';
 
@@ -105,4 +105,29 @@
 
 {#if isShowingInfoUpdate}
   <ProfileUpdater on:click={closingInfoUpdate} />
+{/if}
+
+{#if $userProfile.untouched && !isShowingInfoUpdate}
+  <div class="modal is-active">
+    <div class="modal-background" on:click />
+    <div
+      class="modal-content box is-flex is-flex-direction-column is-align-items-center"
+    >
+      <figure class="image" style="height: 256px; width: 256px;">
+        <img
+          src="favicon.png"
+          alt="Logo of Kota Kita"
+          style="object-fit: cover;"
+        />
+      </figure>
+      <p class="is-size-4">Welcome to Kota Kita!</p>
+
+      <div class="pt-4">
+        <button class="button is-link" on:click={showInfoUpdate}
+          >Setup Profile</button
+        >
+        <button class="ml-6 button" on:click={touchProfile}>Later</button>
+      </div>
+    </div>
+  </div>
 {/if}

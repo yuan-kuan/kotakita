@@ -13,7 +13,7 @@
 
   let mapDiv;
   const loader = new Loader({
-    apiKey: 'AIzaSyCVOJFGHCb-6UaNvqQ7LvKMKxUbR_mIAP8',
+    // apiKey: 'AIzaSyCVOJFGHCb-6UaNvqQ7LvKMKxUbR_mIAP8',
     version: 'weekly',
   });
   const mapOptions = {
