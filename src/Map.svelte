@@ -16,13 +16,12 @@
     apiKey: 'AIzaSyCVOJFGHCb-6UaNvqQ7LvKMKxUbR_mIAP8',
     version: 'weekly',
   });
-
   const mapOptions = {
     center: {
-      lat: 5.9846474,
-      lng: 116.077384,
+      lat: 5.9849337,
+      lng: 116.0760143,
     },
-    zoom: 16.5,
+    zoom: 16.25,
     mapId: 'bb6abb3bae6e3585',
     disableDefaultUI: true,
   };
@@ -39,6 +38,7 @@
 
   onMount(async () => {
     console.log('on mount Map, calling Google');
+
     google = await loader.load();
     map = new google.maps.Map(mapDiv, mapOptions);
     // Create an info window to share between markers.
@@ -49,6 +49,7 @@
       scaledSize: new google.maps.Size(27, 48), // scaled size
       origin: new google.maps.Point(0, 0), // origin
       anchor: new google.maps.Point(13, 46), // anchor
+      labelOrigin: new google.maps.Point(15, -6),
     };
 
     allPlaces.subscribe((places) => {
@@ -58,6 +59,7 @@
             position: { lat: place.lat, lng: place.long },
             map,
             title: place.name,
+            label: { text: place.name, color: '#2d384c', fontSize: '11px' },
             icon: markerIcon,
           });
           marker.addListener('click', () => {
