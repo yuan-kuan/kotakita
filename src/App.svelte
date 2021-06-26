@@ -4,6 +4,7 @@
 
   import { Router, Route } from 'svelte-navigator';
   import Map from './Map.svelte';
+  import Walk from './Walk.svelte';
   import History from './History.svelte';
   import BottomBar from './BottomBar.svelte';
   import Admin from './Admin.svelte';
@@ -22,8 +23,13 @@
     <Route path="/history">
       <History />
     </Route>
-    <Route path="/office">
-      <Admin />
+    <Route path="/office/*">
+      <Route path="/">
+        <Admin />
+      </Route>
+      <Route path=":id" let:params let:navigate>
+        <Walk placeId={params.id} {navigate} />
+      </Route>
     </Route>
     <BottomBar />
   </Router>
