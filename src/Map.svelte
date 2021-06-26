@@ -83,7 +83,7 @@
 <section
   class="section has-background-primary {isShowingMap ? '' : 'is-hidden'}"
 >
-  <p class="title pt-2 has-text-white">Check-points</p>
+  <p class="title pt-2 has-text-white">Checkpoints</p>
 </section>
 
 <div

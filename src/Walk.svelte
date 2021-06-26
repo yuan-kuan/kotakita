@@ -137,7 +137,7 @@
   </button>
 {/if}
 <button
-  class="button is-primary is-inverted is-outlined image-back is-large"
+  class="button is-primary is-inverted image-back is-large"
   on:click={goBack}
 >
   <span class="icon">
