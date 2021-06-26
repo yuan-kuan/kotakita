@@ -52,33 +52,33 @@
     isShowingEditPlace = false;
   };
 
-  const changeOrder = async () => {
-    if (order < 1 || order > $allPlaces.length) {
-      console.error(`order ${order} is out of range`);
-      isShowingEditPlace = false;
-      return;
-    }
+  // const changeOrder = async () => {
+  //   if (order < 1 || order > $allPlaces.length) {
+  //     console.error(`order ${order} is out of range`);
+  //     isShowingEditPlace = false;
+  //     return;
+  //   }
 
-    await place_store.changeOrder(editingPlaceId, order);
-    isShowingEditPlace = false;
-  };
+  //   await place_store.changeOrder(editingPlaceId, order);
+  //   isShowingEditPlace = false;
+  // };
 
-  const changeSlug = async () => {
-    // Do not allow Url change if slug is the same
-    if (slug == editingPlaceId) {
-      console.error(`url ${slug} has not changed.`);
-      isShowingEditPlace = false;
-      return;
-    }
+  // const changeSlug = async () => {
+  //   // Do not allow Url change if slug is the same
+  //   if (slug == editingPlaceId) {
+  //     console.error(`url ${slug} has not changed.`);
+  //     isShowingEditPlace = false;
+  //     return;
+  //   }
 
-    await place_store.changeSlug(editingPlaceId, slug);
-    isShowingEditPlace = false;
-  };
+  //   await place_store.changeSlug(editingPlaceId, slug);
+  //   isShowingEditPlace = false;
+  // };
 
-  const deletePlace = async () => {
-    isShowingEditPlace = false;
-    place_store.deletePlace(editingPlaceId);
-  };
+  // const deletePlace = async () => {
+  //   isShowingEditPlace = false;
+  //   place_store.deletePlace(editingPlaceId);
+  // };
 </script>
 
 {#if $isAdmin}
