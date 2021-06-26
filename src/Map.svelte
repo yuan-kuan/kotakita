@@ -88,7 +88,7 @@
 
 <div
   bind:this={mapDiv}
-  class="has-background-danger {isShowingMap ? '' : 'is-hidden'}"
+  class={isShowingMap ? '' : 'is-hidden'}
   style="height: calc(100vh - 76px - 66px);"
 >
   <!-- on:click={panelNavigate} -->
