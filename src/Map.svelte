@@ -59,10 +59,6 @@
             panelPlaceKey = place.key;
             infoWindow.close();
             infoWindow.setContent(panel);
-            // infoWindow.setContent(
-            //   `<p class="is-size-4">${place.name}<p>` +
-            //     `<a href="walk/${place.key}"><button class="button">Go!</button></a>`
-            // );
             infoWindow.open(marker.getMap(), marker);
           });
         } else {
@@ -73,15 +69,15 @@
   });
 
   const panelNavigate = () => {
-    console.log('naviageting to ', panelPlaceKey);
-    console.log('navigate :>> ', navigate);
     navigate(panelPlaceKey);
   };
 </script>
 
-<div bind:this={panel}>
-  <span>{panelTitle}</span>
-  <button class="button" on:click={panelNavigate}>Go!</button>
+<div class="has-text-centered" bind:this={panel}>
+  <p class="is-size-4 has-text-weigth-bold">{panelTitle}</p>
+  <button class="p-2 mt-2 button is-primary" on:click={panelNavigate}
+    >Check it out!</button
+  >
 </div>
 
 <section
