@@ -1,5 +1,4 @@
 <script>
-  import { fade } from 'svelte/transition';
   import Rating from './Rating.svelte';
   import { checkedIn, checkIn, determineCheckedInStatus } from './route_store';
   import { keyToName } from './place_store';

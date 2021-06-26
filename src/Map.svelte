@@ -28,7 +28,6 @@
 
   let google;
   let map;
-  let markers;
   let infoWindow;
   let panel;
   let panelTitle;

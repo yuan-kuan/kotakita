@@ -161,6 +161,7 @@
 
       {#if !rateCompleted}
         <div class="block is-flex is-flex-direction-row-reverse">
+          <!-- svelte-ignore a11y-missing-attribute -->
           <a class="is-size-7" on:click>Continuer later</a>
         </div>
       {/if}
@@ -192,19 +193,5 @@
   .button.is-longer {
     padding-left: 3em;
     padding-right: 3em;
-  }
-
-  .rate-button {
-    height: 32px;
-    width: 32px;
-    border: 1px solid #77cdfe;
-    display: inline-block;
-    border-radius: 50%;
-    text-align: center;
-    margin: 2px;
-    margin-right: 4px;
-    color: #77cdfe;
-    font-size: 0.85em;
-    padding-top: 4px;
   }
 </style>

@@ -1,7 +1,7 @@
 <script>
   // import QRious from 'qrious';
   import { onDestroy } from 'svelte';
-  import { fade, fly } from 'svelte/transition';
+  import { fade } from 'svelte/transition';
   import { isAdmin } from './user_store';
   import { visitingPlace, visitPlace } from './route_store';
   import EmbededMap from './Embeded_Map.svelte';

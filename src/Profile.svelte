@@ -1,6 +1,6 @@
 <script>
   import ProfileUpdater from './ProfileUpdater.svelte';
-  import { tryAdminAccess, userProfile, forgetUser } from './user_store';
+  import { userProfile, forgetUser } from './user_store';
 
   $: name = $userProfile.name ?? 'New User';
 
