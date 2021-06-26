@@ -178,9 +178,8 @@
           >Change Lat Long</button
         >
       </div>
-
+      <!-- 
       <div class="box field">
-        <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label">Order</label>
         <input class="input" bind:value={order} />
         <button class="button is-success" on:click={changeOrder}
@@ -189,7 +188,6 @@
       </div>
 
       <div class="box field">
-        <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label">Url</label>
         <input class="input" bind:value={slug} />
         <p class="help">
@@ -208,7 +206,8 @@
         <button class="button is-danger" on:click={deletePlace}
           >Delete this checkpoint</button
         >
-      </div>
+      </div> 
+-->
     </section>
   </div>
   <button

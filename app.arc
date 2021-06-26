@@ -5,12 +5,8 @@ svelte-app
 get /admin-access
 get /place/:id
 put /place/:id
-put /order/:id
-put /url/:id
-delete /place/:id
 get /all-places
 post /place
-post /prefill
 get /all-questions
 post /question
 put /question/:id
