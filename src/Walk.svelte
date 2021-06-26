@@ -1,7 +1,7 @@
 <script>
   // import QRious from 'qrious';
   import { onDestroy } from 'svelte';
-  import { fade } from 'svelte/transition';
+  import { fade, fly } from 'svelte/transition';
   import { isAdmin } from './user_store';
   import { visitingPlace, visitPlace } from './route_store';
   import EmbededMap from './Embeded_Map.svelte';
@@ -144,7 +144,11 @@
     <i class="fa fa-arrow-left" />
   </span>
 </button>
-<figure class="image is-1by1 has-background-info" style="z-index: -1;">
+<figure
+  transition:fly={{ x: 200, duration: 500 }}
+  class="image is-1by1 has-background-info"
+  style="z-index: -1;"
+>
   {#if photoUrl}
     <img
       in:fade
