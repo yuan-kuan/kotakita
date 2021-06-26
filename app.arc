@@ -10,7 +10,6 @@ post /place
 get /all-questions
 post /question
 put /question/:id
-get /rating
 put /rating
 
 @shared
