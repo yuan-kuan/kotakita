@@ -75,10 +75,10 @@
   //   isShowingEditPlace = false;
   // };
 
-  // const deletePlace = async () => {
-  //   isShowingEditPlace = false;
-  //   place_store.deletePlace(editingPlaceId);
-  // };
+  const deletePlace = async () => {
+    isShowingEditPlace = false;
+    place_store.deletePlace(editingPlaceId);
+  };
 </script>
 
 {#if $isAdmin}
@@ -207,12 +207,12 @@
         >
       </div>
 
+    -->
       <div class="box">
         <button class="button is-danger" on:click={deletePlace}
           >Delete this checkpoint</button
         >
-      </div> 
--->
+      </div>
     </section>
   </div>
   <button

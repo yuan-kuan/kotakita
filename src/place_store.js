@@ -32,21 +32,34 @@ export const preparePlaceMap = async () => {
 
 export const deletePlace = async (editingPlaceId) => {
   try {
-    let respond = await fetch('/place/' + editingPlaceId, {
-      method: 'DELETE',
+    await fetch('/place/' + editingPlaceId, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ isDelete: true }),
     });
-
-    if (respond.ok) {
-      preparePlaces();
-    } else {
-      console.error(respond);
-    }
   } catch (error) {
     console.error(error);
+  } finally {
+    preparePlaces();
   }
+  // try {
+  //   let respond = await fetch('/place/' + editingPlaceId, {
+  //     method: 'DELETE',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   });
+
+  //   if (respond.ok) {
+  //     preparePlaces();
+  //   } else {
+  //     console.error(respond);
+  //   }
+  // } catch (error) {
+  //   console.error(error);
+  // }
 };
 
 export const changeSlug = async (editingPlaceId, slug) => {

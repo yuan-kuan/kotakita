@@ -12,20 +12,43 @@ const updatePlace = async (req) => {
     const payload = req.body;
 
     const table = 'place';
-    const place = await data.get({ table, key });
-    if (place == null) {
-      return { statusCode: 404 };
+
+    if (payload.isDelete) {
+      await data.destroy({ table, key });
+
+      // Remove it from order
+      const orderTable = 'order';
+      const orderKey = 'place';
+      let orderObject = await data.get({ table: orderTable, key: orderKey });
+      const orders = orderObject.data;
+
+      let oldOrder = orders.findIndex((e) => e == key);
+      // Delete the old entry
+      orders.splice(oldOrder, 1);
+
+      console.info(`New orders: ${JSON.stringify(orders)}`);
+
+      await data.set({
+        table: orderTable,
+        key: orderKey,
+        data: orders,
+      });
+    } else {
+      const place = await data.get({ table, key });
+      if (place == null) {
+        return { statusCode: 404 };
+      }
+
+      console.info(`Old: ${JSON.stringify(place)}`);
+      const updatedPlace = Object.assign(place, payload);
+      console.info(`New: ${JSON.stringify(updatedPlace)}`);
+
+      await data.set({
+        table,
+        key,
+        ...updatedPlace,
+      });
     }
-
-    console.info(`Old: ${JSON.stringify(place)}`);
-    const updatedPlace = Object.assign(place, payload);
-    console.info(`New: ${JSON.stringify(updatedPlace)}`);
-
-    await data.set({
-      table,
-      key,
-      ...updatedPlace,
-    });
   }
   return {
     headers: {
