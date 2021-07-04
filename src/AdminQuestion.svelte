@@ -63,7 +63,9 @@
     isShowingEditQuestion = false;
   };
 
+  let isGeneratingReport = false;
   const report = async () => {
+    isGeneratingReport = true;
     try {
       let respond = await fetch('/report');
       const ratings = await respond.json();
@@ -122,6 +124,8 @@
       hiddenElement.click();
     } catch (error) {
       console.error(error);
+    } finally {
+      isGeneratingReport = false;
     }
   };
 </script>
@@ -157,7 +161,10 @@
 </section>
 
 <div class="box">
-  <button class="button" on:click={report}>download report</button>
+  <button
+    class="button {isGeneratingReport ? 'is-loading' : ''}"
+    on:click={report}>download report</button
+  >
 </div>
 
 <div class="modal" class:is-active={isShowingEditQuestion}>
