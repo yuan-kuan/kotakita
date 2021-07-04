@@ -11,6 +11,7 @@ get /all-questions
 post /question
 put /question/:id
 put /rating
+get /report
 
 @shared
 src src/shared # this is the default

@@ -6,6 +6,7 @@
     editQuestion,
     prepareQuestion,
   } from './question_store';
+  import { keyToName } from './place_store';
 
   onMount(() => prepareQuestion());
 
@@ -49,7 +50,6 @@
       disabled: questionDisabled,
     };
 
-    console.log('toSave :>> ', toSave);
     if (questionId == 0) {
       addQuestion(toSave);
     } else {
@@ -65,7 +65,61 @@
 
   const report = async () => {
     try {
-      await fetch('/rating');
+      let respond = await fetch('/report');
+      const ratings = await respond.json();
+
+      const csv = [];
+
+      // Header
+      const headRow = [];
+      headRow.push('from', 'to', 'time', 'age', 'gender', 'oku', 'name');
+      headRow.push(
+        ...Object.keys($allQuestions).map((qIndex) => [
+          `Question ${qIndex}`,
+          'commnent',
+        ])
+      );
+      csv.push(headRow);
+
+      // Body
+      for (const key in ratings) {
+        const rating = ratings[key];
+
+        const destinations = key.split('_');
+
+        for (const rates of rating) {
+          const row = [];
+
+          row.push(...destinations.map((d) => keyToName(d)));
+
+          const [time, profile] = rates.key.split('_');
+          const d = new Date(parseInt(time, 36));
+
+          // Time
+          row.push(
+            `${d.getFullYear()}-${d.getMonth()}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
+          );
+
+          // Profiles
+          row.push(...profile.split('-'));
+
+          row.push(
+            ...Object.keys($allQuestions).map((qIndex) => rates[qIndex])
+          );
+
+          csv.push(row);
+        }
+      }
+      console.log('csv :>> ', csv);
+
+      let csvContent =
+        'data:text/csv;charset=utf-8,' + csv.map((e) => e.join(',')).join('\n');
+
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = encodeURI(csvContent);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'kk.csv';
+      hiddenElement.click();
     } catch (error) {
       console.error(error);
     }
@@ -102,7 +156,9 @@
   <p class="subtitle has-text-white">Rating</p>
 </section>
 
-<button class="button" on:click={report}>Rating report</button>
+<div class="box">
+  <button class="button" on:click={report}>download report</button>
+</div>
 
 <div class="modal" class:is-active={isShowingEditQuestion}>
   <div class="modal-background" on:click={closeQuestion} />
