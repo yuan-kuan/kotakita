@@ -154,5 +154,10 @@ export const prefill = async () => {
 };
 
 export const keyToName = (key) => {
-  return placeMap[key].name;
+  var place = placeMap[key];
+  if (place) {
+    return place.name;
+  } else {
+    return key;
+  }
 };
