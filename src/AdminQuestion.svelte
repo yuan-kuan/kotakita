@@ -99,7 +99,9 @@
 
           // Time
           row.push(
-            `${d.getFullYear()}-${d.getMonth()}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
+            `${d.getFullYear()}-${
+              d.getMonth() + 1
+            }-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
           );
 
           // Profiles
@@ -120,7 +122,11 @@
       var hiddenElement = document.createElement('a');
       hiddenElement.href = encodeURI(csvContent);
       hiddenElement.target = '_blank';
-      hiddenElement.download = 'kk.csv';
+
+      const today = new Date();
+      hiddenElement.download = `kotakita-report-${today.getDate()}-${
+        today.getMonth() + 1
+      }-${today.getFullYear()}.csv`;
       hiddenElement.click();
     } catch (error) {
       console.error(error);
