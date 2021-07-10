@@ -1,6 +1,9 @@
 @app
 svelte-app
 
+@static
+spa true 
+
 @http
 get /admin-access
 get /place/:id
